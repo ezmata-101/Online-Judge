@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from "./component/layout/Header";
+import ProblemPage from "./component/problem/ProblemPage";
 
 function App() {
+    const problem = {
+        problemId: 'c1p1',
+        name: 'Shortest Path',
+        difficulty: 1200,
+        category: ['Graph Theory', 'Shortest Path', 'All pair Shortest Path'],
+        timeLimit: 2,
+        memoryLimit: 256,
+        statement: 'demo.md',
+        input: 'demo_input.txt',
+        output: 'demo_output.txt',
+        tutorial: 'null'
+    }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header/>
+        <ProblemPage problem={problem}/>
     </div>
   );
 }
