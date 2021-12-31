@@ -1,12 +1,11 @@
 class Submission {
-    constructor(submissionId, submissionTime, language, verdict, time, memory, statement, attemptedBy, attemptedFor) {
+    constructor(submissionId, submissionTime, language, verdict, time, memory, attemptedBy, attemptedFor) {
         this.submissionId = submissionId;
         this.submissionTime = submissionTime;
         this.language = language;
         this.time = time;
         this.memory = memory;
         this.verdict = verdict;
-        this.statement = statement;
         this.attemptedBy = attemptedBy;
         this.attemptedFor = attemptedFor;
     }
@@ -18,7 +17,6 @@ class Submission {
             verdict: this.verdict,
             time: this.time,
             memory: this.memory,
-            statement: this.statement,
             attemptedBy: this.attemptedBy,
             attemptedFor: this.attemptedFor
         }
