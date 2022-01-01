@@ -1,6 +1,8 @@
 import Header from "./component/layout/Header";
 import ProblemPage from "./component/problem/ProblemPage";
 import Submission from "./models/Submission";
+import {Route, Routes} from "react-router-dom";
+import SubmissionPage from "./component/submission/SubmissionPage";
 
 function App() {
     const problem = {
@@ -21,9 +23,9 @@ function App() {
         ],
         tutorial: 'null'
     }
-    const sub1 = new Submission('pid', Date.now(), 'C++', 'AC', 232, 124,1, 'c1p1')
-    const sub2 = new Submission('pid', Date.now(), 'C++', 'WA', 202, 124,1, 'c1p1')
-    const sub3 = new Submission('pid', Date.now(), 'C++', 'TLE', 3000, 124,1, 'c1p1')
+    const sub1 = new Submission('pid', Date.now(), 'C++', 'AC', 232, 124,1, 'c1p1', 'null')
+    const sub2 = new Submission('pid', Date.now(), 'C++', 'WA', 202, 124,1, 'c1p1', 'null')
+    const sub3 = new Submission('pid', Date.now(), 'C++', 'TLE', 3000, 124,1, 'c1p1', 'null')
 
     const prevSubmissions = [
         sub1.getAsJSON(),
@@ -33,7 +35,15 @@ function App() {
   return (
     <div className="App">
       <Header/>
-        <ProblemPage problem={problem} prevSubs={prevSubmissions}/>
+        <Routes>
+            <Route path='/' exact
+                   element={<ProblemPage problem={problem} prevSubs={prevSubmissions}/>}>
+            </Route>
+            <Route path="/submission" element={<SubmissionPage submission={null}/>}>
+            </Route>
+            {/*<Route path="/favorites" element={<Favorites/>}>*/}
+            {/*</Route>*/}
+        </Routes>
     </div>
   );
 }

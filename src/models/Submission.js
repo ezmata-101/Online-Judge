@@ -1,5 +1,5 @@
 class Submission {
-    constructor(submissionId, submissionTime, language, verdict, time, memory, attemptedBy, attemptedFor) {
+    constructor(submissionId, submissionTime, language, verdict, time, memory, attemptedBy, attemptedFor, submittedFile) {
         this.submissionId = submissionId;
         this.submissionTime = submissionTime;
         this.language = language;
@@ -8,6 +8,7 @@ class Submission {
         this.verdict = verdict;
         this.attemptedBy = attemptedBy;
         this.attemptedFor = attemptedFor;
+        this.submittedFile = submittedFile;
     }
     getAsJSON(){
         return {
@@ -18,7 +19,8 @@ class Submission {
             time: this.time,
             memory: this.memory,
             attemptedBy: this.attemptedBy,
-            attemptedFor: this.attemptedFor
+            attemptedFor: this.attemptedFor,
+            submittedFile: this.submittedFile
         }
     }
 }

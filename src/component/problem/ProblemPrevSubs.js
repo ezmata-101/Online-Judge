@@ -1,5 +1,4 @@
 import {Link, Table, TableBody, TableCell, TableHead, TableRow, Typography} from "@mui/material";
-import Submission from "../../models/Submission";
 
 function ProblemPrevSubs(props){
     const prevSubmissions = props.preSubs;
@@ -27,8 +26,7 @@ function ProblemPrevSubs(props){
         const hour = a.getHours();
         const min = a.getMinutes();
         const sec = a.getSeconds();
-        const time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
-        return time;
+        return date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
     }
 
     return <div>

@@ -1,9 +1,10 @@
 import Submission from "../../models/Submission";
 import {useState} from "react";
+import {useNavigate} from 'react-router-dom';
 
 function SubmissionFileUpload(props){
     const [submittedFile, setSubmittedFile] = useState(null)
-
+    const navigate = useNavigate()
     function onFileChange(event){
         setSubmittedFile(event.target.files[0])
         const reader = new FileReader();
@@ -14,8 +15,9 @@ function SubmissionFileUpload(props){
     }
     function onFileUpload(){
         console.log(submittedFile)
-        const submission = new Submission(-1, Date.now(), 'C++', 'uploading', null, null, 'ME', props.problemId)
+        const submission = new Submission(-1, Date.now(), 'C++', 'uploading', null, null, 'ME', props.problemId, submittedFile)
         console.log(submission.getAsJSON())
+        navigate('/submission', {state: {submission: submission}})
     }
 
 
