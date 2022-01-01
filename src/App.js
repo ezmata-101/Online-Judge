@@ -1,5 +1,6 @@
 import Header from "./component/layout/Header";
 import ProblemPage from "./component/problem/ProblemPage";
+import Submission from "./models/Submission";
 
 function App() {
     const problem = {
@@ -20,10 +21,19 @@ function App() {
         ],
         tutorial: 'null'
     }
+    const sub1 = new Submission('pid', Date.now(), 'C++', 'AC', 232, 124,1, 'c1p1')
+    const sub2 = new Submission('pid', Date.now(), 'C++', 'WA', 202, 124,1, 'c1p1')
+    const sub3 = new Submission('pid', Date.now(), 'C++', 'TLE', 3000, 124,1, 'c1p1')
+
+    const prevSubmissions = [
+        sub1.getAsJSON(),
+        sub2.getAsJSON(),
+        sub3.getAsJSON(),
+    ]
   return (
     <div className="App">
       <Header/>
-        <ProblemPage problem={problem}/>
+        <ProblemPage problem={problem} prevSubs={prevSubmissions}/>
     </div>
   );
 }
