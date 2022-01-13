@@ -1,8 +1,10 @@
+import React from 'react'
 import Header from "./component/layout/Header";
 import ProblemPage from "./component/problem/ProblemPage";
 import Submission from "./models/Submission";
 import {Route, Routes} from "react-router-dom";
 import SubmissionPage from "./component/submission/SubmissionPage";
+import ContestCreationPage from "./component/contest/ContestCreationPage";
 
 function App() {
     const problem = {
@@ -39,10 +41,12 @@ function App() {
             <Route path='/' exact
                    element={<ProblemPage problem={problem} prevSubs={prevSubmissions}/>}>
             </Route>
-            <Route path="/submission" element={<SubmissionPage submission={null}/>}>
+            <Route path="/submission"
+                   element={<SubmissionPage submission={null}/>}>
             </Route>
-            {/*<Route path="/favorites" element={<Favorites/>}>*/}
-            {/*</Route>*/}
+            <Route path="/create-contest"
+                   element={<ContestCreationPage/>}>
+            </Route>
         </Routes>
     </div>
   );

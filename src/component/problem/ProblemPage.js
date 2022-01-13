@@ -1,3 +1,4 @@
+import React from 'react'
 import ProblemHeader from "./ProblemHeader";
 import ProblemStatement from "./ProblemStatement";
 import ProblemInputOutput from "./ProblemInputOutput";

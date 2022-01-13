@@ -1,3 +1,4 @@
+import React from 'react'
 import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
 
 function ProblemInputOutput(props){

@@ -1,5 +1,7 @@
+import React from 'react'
 import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
 import {useLocation} from "react-router-dom";
+import {timeConverter} from '../../utilFunction';
 
 
 function SubmissionPage(props){
@@ -28,7 +30,7 @@ function SubmissionPage(props){
                 <TableBody><TableRow>
                         <TableCell>{sub.submissionId}</TableCell>
                         <TableCell>{sub.attemptedFor}</TableCell>
-                        <TableCell>{sub.submissionTime}</TableCell>
+                        <TableCell>{timeConverter(sub.submissionTime)}</TableCell>
                         <TableCell>{sub.language}</TableCell>
                         <TableCell>{sub.verdict}</TableCell>
                         <TableCell>{sub.time}</TableCell>
