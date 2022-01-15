@@ -6,7 +6,7 @@ function ProblemStatement(props){
     const [statement, setStatement] = useState('')
 
     useEffect(() => {
-        import('./../../'+props.statement)
+        import('./../../../'+props.statement)
             .then(res => {
                 fetch(res.default)
                     .then(res => res.text())

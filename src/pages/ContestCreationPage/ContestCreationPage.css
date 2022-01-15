@@ -1,0 +1,29 @@
+.create-contest-body{
+    display: grid;
+    text-align: center;
+}
+
+.form{
+    /*padding: 10px;*/
+}
+.form div{
+    padding: 5px;
+}
+
+.title{
+}
+.title-text-field{
+}
+
+.start-time{
+}
+.start-time-picker{
+}
+
+.end-time{
+}
+.end-time-picker{
+}
+
+.submit-button{
+}

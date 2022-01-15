@@ -1,21 +1,9 @@
 import React from 'react'
 import {Link, Table, TableBody, TableCell, TableHead, TableRow, Typography} from "@mui/material";
-import {timeConverter} from '../../utilFunction';
+import {timeConverter} from '../../../component/util/utilFunction.js';
 function ProblemPrevSubs(props){
     const prevSubmissions = props.preSubs;
-    // const sub1 = new Submission(1234789, Date.now(), 'C++', 'AC', 232, 124,1, 'c1p1')
-    // const sub2 = new Submission(1239875, Date.now(), 'C++', 'WA', 202, 124,1, 'c1p1')
-    // const sub3 = new Submission(1032942, Date.now(), 'C++', 'TLE', 3000, 124,1, 'c1p1')
-    //
-    // const prevSubmissions = [
-    //     sub1.getAsJSON(),
-    //     sub2.getAsJSON(),
-    //     sub3.getAsJSON(),
-    // ]
-    console.log(prevSubmissions)
-
     function goToSubmission(submissionId) {
-        console.log(submissionId)
     }
 
     return <div>

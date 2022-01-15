@@ -1,10 +1,10 @@
 class Contest{
-    constructor(creator, contestId, participants, announcement, startTime, duration, problems) {
+    constructor(creator, contestId, participants, announcement, startTime, endTime, problems) {
         this.creator = creator;
         this.contestId = contestId;
         this.participants = participants;
         this.startTime = startTime;
-        this.duration = duration;
+        this.endTime = endTime;
         this.announcement = announcement;
         this.problems = problems;
     }
@@ -15,7 +15,7 @@ class Contest{
             participants: this.participants,
             announcement: this.announcement,
             startTime: this.startTime,
-            duration: this.duration,
+            endTime: this.endTime,
             problems: this.problems
         }
     }

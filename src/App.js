@@ -1,10 +1,11 @@
 import React from 'react'
 import Header from "./component/layout/Header";
-import ProblemPage from "./component/problem/ProblemPage";
+import ProblemPage from "./pages/ProblemPage/ProblemPage";
 import Submission from "./models/Submission";
 import {Route, Routes} from "react-router-dom";
-import SubmissionPage from "./component/submission/SubmissionPage";
-import ContestCreationPage from "./component/contest/ContestCreationPage";
+import SubmissionPage from "./pages/SubmissionPage/SubmissionPage";
+import ContestCreationPage from "./pages/ContestCreationPage/ContestCreationPage";
+import ContestAdminPage from "./pages/ContestAdminPage/ContestAdminPage";
 
 function App() {
     const problem = {
@@ -46,6 +47,9 @@ function App() {
             </Route>
             <Route path="/create-contest"
                    element={<ContestCreationPage/>}>
+            </Route>
+            <Route path="/contest-admin"
+                   element={<ContestAdminPage/>}>
             </Route>
         </Routes>
     </div>

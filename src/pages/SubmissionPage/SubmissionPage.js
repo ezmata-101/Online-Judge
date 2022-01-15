@@ -1,7 +1,7 @@
 import React from 'react'
 import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
 import {useLocation} from "react-router-dom";
-import {timeConverter} from '../../utilFunction';
+import {timeConverter} from '../../component/util/utilFunction.js';
 
 
 function SubmissionPage(props){
