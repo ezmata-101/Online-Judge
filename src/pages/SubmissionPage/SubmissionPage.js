@@ -6,13 +6,12 @@ import {timeConverter} from '../../component/util/utilFunction.js';
 
 function SubmissionPage(props){
     const location = useLocation();
-    console.log(location)
     console.log(location.state)
-    // console.log(props)
-    // const sub = new Submission(12312231, 'C1p1', Date.now(), 'C++', 'AC', 212, 124, 'ME', "\r\n#define s(a) scanf(\"%d\", &a)\r\nint main()\r\n{\r\n    int a;\r\n    s(a);\r\n    printf(\"%d\", a);\r\n    return 0;\r\n}")
     if(location.state.submission == null) return <div>No submission sent</div>
 
     const sub = location.state.submission;
+
+
     return <div>
         <div>
             <Table>

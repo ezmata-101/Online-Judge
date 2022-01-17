@@ -17,7 +17,7 @@ function ProblemPage(props){
     }
     function onFileUpload(){
         const submission = new Submission(-1, Date.now(), 'C++', 'uploading', null, null, 'ME', props.problemId, submissionFile)
-        console.log(submission.getAsJSON())
+
         navigate('/submission', {state: {submission: submission}})
     }
 

@@ -6,6 +6,7 @@ import {Route, Routes} from "react-router-dom";
 import SubmissionPage from "./pages/SubmissionPage/SubmissionPage";
 import ContestCreationPage from "./pages/ContestCreationPage/ContestCreationPage";
 import ContestAdminPage from "./pages/ContestAdminPage/ContestAdminPage";
+import LoginPage from "./pages/authentication/LoginPage";
 
 function App() {
     const problem = {
@@ -50,6 +51,9 @@ function App() {
             </Route>
             <Route path="/contest-admin"
                    element={<ContestAdminPage/>}>
+            </Route>
+            <Route path="/login"
+                   element={<LoginPage/>}>
             </Route>
         </Routes>
     </div>

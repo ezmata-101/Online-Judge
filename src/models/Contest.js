@@ -1,5 +1,6 @@
 class Contest{
-    constructor(creator, contestId, participants, announcement, startTime, endTime, problems) {
+    constructor(title, creator, contestId, participants, announcement, startTime, endTime, problems) {
+        this.title = title;
         this.creator = creator;
         this.contestId = contestId;
         this.participants = participants;
@@ -10,6 +11,7 @@ class Contest{
     }
     getAsJSON(){
         return {
+            title: this.title,
             creator: this.creator,
             contestId: this.contestId,
             participants: this.participants,

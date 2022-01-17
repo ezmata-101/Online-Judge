@@ -40,7 +40,7 @@ function ContestCreationPage(){
             duration: endTime - startTime,
             announcement: hasAnnouncement
         }
-        console.log(new Date(contest.duration))
+        addNewContest(contest)
     }
 
     function addNewContest(contest){
@@ -48,7 +48,7 @@ function ContestCreationPage(){
 
         //TODO: Send request to server to create a contest and get a ContestID actually server will return a contestObject
 
-        navigate('/submission', {state: {contest: new Contest('creator', -1, [], announcement, startTime, endTime, [])}})
+        navigate('/submission', {state: {contest: new Contest(contest.title,'creator', -1, [], announcement, startTime, endTime, [])}})
     }
 
     function onSelectAnnouncement(selectedFile){
