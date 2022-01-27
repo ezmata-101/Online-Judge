@@ -7,6 +7,8 @@ import SubmissionPage from "./pages/SubmissionPage/SubmissionPage";
 import ContestCreationPage from "./pages/ContestCreationPage/ContestCreationPage";
 import ContestAdminPage from "./pages/ContestAdminPage/ContestAdminPage";
 import LoginPage from "./pages/authentication/LoginPage";
+import SignUpPage from "./pages/authentication/SignUpPage";
+import ProfilePage from "./pages/profile/ProfilePage";
 
 function App() {
     const problem = {
@@ -54,6 +56,12 @@ function App() {
             </Route>
             <Route path="/login"
                    element={<LoginPage/>}>
+            </Route>
+            <Route path="/signup"
+                   element={<SignUpPage/>}>
+            </Route>
+            <Route path="/profile"
+                   element={<ProfilePage/>}>
             </Route>
         </Routes>
     </div>
