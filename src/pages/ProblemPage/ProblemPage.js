@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 import ProblemHeader from "./problem/ProblemHeader";
 import ProblemStatement from "./problem/ProblemStatement";
@@ -9,7 +9,17 @@ import FileUploadComponent from "../../component/util/FileUploadComponent";
 import Submission from "../../models/Submission";
 
 function ProblemPage(props){
-    const p = props.problem;
+    // const p = props.problem;
+    const location = useLocation();
+    let p;
+    if(props.problem){
+        p = props.problem;
+    }else if(location.state.problem){
+        p = location.state.problem;
+        console.log(p);
+    }else{
+        p = null;
+    }
     const navigate = useNavigate();
     const [submissionFile, setSubmissionFile] = useState([null])
     function onSelectFile(selectedFile){
@@ -30,7 +40,7 @@ function ProblemPage(props){
         </div>
         <div className={"right-panel"}>
             <FileUploadComponent onSelectFile={onSelectFile} onFileUpload={onFileUpload}/>
-            <ProblemPrevSubs preSubs={props.prevSubs}/>
+            {props.prevSubs && <ProblemPrevSubs preSubs={props.prevSubs}/>}
         </div>
     </div>
 }

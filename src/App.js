@@ -9,6 +9,7 @@ import ContestAdminPage from "./pages/ContestAdminPage/ContestAdminPage";
 import LoginPage from "./pages/authentication/LoginPage";
 import SignUpPage from "./pages/authentication/SignUpPage";
 import ProfilePage from "./pages/profile/ProfilePage";
+import ProblemCreate from "./pages/ProblemCreationPage/ProblemCreate";
 
 function App() {
     const problem = {
@@ -45,6 +46,9 @@ function App() {
             <Route path='/' exact
                    element={<ProblemPage problem={problem} prevSubs={prevSubmissions}/>}>
             </Route>
+            <Route path='/problem' exact
+                   element={<ProblemPage/>}>
+            </Route>
             <Route path="/submission"
                    element={<SubmissionPage submission={null}/>}>
             </Route>
@@ -62,6 +66,12 @@ function App() {
             </Route>
             <Route path="/profile"
                    element={<ProfilePage/>}>
+            </Route>
+            <Route path="/contest-admin"
+                   element={<ContestAdminPage/>}>
+            </Route>
+            <Route path="/problem-create"
+                   element={<ProblemCreate/>}>
             </Route>
         </Routes>
     </div>

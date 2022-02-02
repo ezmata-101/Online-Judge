@@ -9,3 +9,33 @@ export function timeConverter(UNIX_timestamp){
     const sec = a.getSeconds();
     return date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
 }
+
+export function isTestInput(str1){
+    str1 = str1.toLowerCase();
+    return str1.substr(0, 4) === 'test' && str1.substr(5, 5) === 'input';
+}
+export function isTestOutput(str1){
+    str1 = str1.toLowerCase();
+    return str1.substr(0, 4) === 'test' && str1.substr(5, 6) === 'output';
+}
+export function isSampleInput(str1){
+    str1 = str1.toLowerCase();
+    return str1.substr(0, 6) === 'sample' && str1.substr(7, 5) === 'input';
+}
+export function isSampleOutput(str1){
+    str1 = str1.toLowerCase();
+    return str1.substr(0, 6) === 'sample' && str1.substr(7, 6) === 'output';
+}
+export function isStatement(str1){
+    str1 = str1.toLowerCase();
+    return str1 === 'statement.md';
+}
+export async function readFileSynchronously(file){
+    return await new Promise((res) => {
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            res(reader.result)
+        }
+        reader.readAsText(file)
+    });
+}
