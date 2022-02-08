@@ -3,6 +3,7 @@ import React, {useRef, useState} from "react";
 import {Button, TextField} from "@mui/material";
 import MultipleSelectCheckmarks from "./MultipleSelectCheckMarks";
 import {useNavigate} from "react-router-dom";
+import {createProblem} from './../../contactServer/problem.js';
 
 function ProblemCreate(props){
     const navigate = useNavigate();
@@ -75,7 +76,13 @@ function ProblemCreate(props){
         problem.input = input;
         problem.output = output;
         // console.log(problem)
-        navigate('/problem', {state: {problem: problem}});
+
+        createProblem(problem).then(res => {
+            console.log('problem creation page a!')
+            console.log(res)
+        })
+
+        // navigate('/problem', {state: {problem: problem}});
     }
 
     return <div>

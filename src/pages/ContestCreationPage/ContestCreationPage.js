@@ -10,6 +10,7 @@ import './ContestCreationPage.css';
 import {DateTimePicker, LocalizationProvider} from "@mui/lab";
 import Contest from "../../models/Contest";
 import FileUploadComponent from "../../component/util/FileUploadComponent";
+import {createContest} from '../../contactServer/contest.js'
 
 function ContestCreationPage(){
     const contestTitle = useRef();
@@ -38,7 +39,7 @@ function ContestCreationPage(){
             startTime,
             endTime,
             duration: endTime - startTime,
-            announcement: hasAnnouncement
+            announcement: announcement
         }
         addNewContest(contest)
     }
@@ -46,6 +47,10 @@ function ContestCreationPage(){
     function addNewContest(contest){
         console.log("Send Request to server to create a contest")
 
+        createContest(contest)
+            .then(res=>{
+                console.log(res)
+            })
         //TODO: Send request to server to create a contest and get a ContestID actually server will return a contestObject
 
         navigate('/submission', {state: {contest: new Contest(contest.title,'creator', -1, [], announcement, startTime, endTime, [])}})
