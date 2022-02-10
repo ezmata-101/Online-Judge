@@ -15,8 +15,6 @@ function ProfilePage(props){
 
     const handle1 = location.state.userHandle;
 
-    console.log(handle1)
-
     useEffect(() =>{
         const options = {
             method: "GET",
@@ -37,10 +35,11 @@ function ProfilePage(props){
                 setCountry(json.country)
                 setInstitute(json.institute)
                 setRating(json.rating)
+                setEmail(json.email)
             }).catch(err => {
                 console.error(err)
         })
-    }, null)
+    }, [])
 
     return <div className={"profile-section"}>
         <table>

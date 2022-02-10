@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useLocation, useNavigate} from 'react-router-dom';
 
 import ProblemHeader from "./problem/ProblemHeader";
@@ -9,17 +9,15 @@ import FileUploadComponent from "../../component/util/FileUploadComponent";
 import Submission from "../../models/Submission";
 
 function ProblemPage(props){
-    // const p = props.problem;
     const location = useLocation();
-    let p;
-    if(props.problem){
-        p = props.problem;
-    }else if(location.state.problem){
-        p = location.state.problem;
-        console.log(p);
+    let problem = props.problem;
+    if(problem == null){
+        problem = location.state.problem
     }else{
-        p = null;
+        problem = null
     }
+
+
     const navigate = useNavigate();
     const [submissionFile, setSubmissionFile] = useState([null])
     function onSelectFile(selectedFile){
@@ -31,12 +29,14 @@ function ProblemPage(props){
         navigate('/submission', {state: {submission: submission}})
     }
 
-    if (p == null) return <div>no problem found</div>
+
+
+    if (problem == null) return <div>no problem found</div>
     return <div className="problem" style={{"display": "flex"}}>
         <div className={"problem-body"}>
-            <ProblemHeader problem={p}/>
-            <ProblemStatement statement={p.statement}/>
-            <ProblemInputOutput problem={p}/>
+            <ProblemHeader problem={problem}/>
+            <ProblemStatement statement={problem.statement}/>
+            <ProblemInputOutput problem={problem}/>
         </div>
         <div className={"right-panel"}>
             <FileUploadComponent onSelectFile={onSelectFile} onFileUpload={onFileUpload}/>

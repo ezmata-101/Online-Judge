@@ -33,7 +33,7 @@ function LoginPage(){
             }else{
                 setHint(null)
                 localStorage.setItem("accessToken", res.accessToken);
-
+                localStorage.setItem("handle", handle);
                 // const accessToken = res.accessToken;
                 navigate('/profile', {state: {userHandle: handle}})
             }

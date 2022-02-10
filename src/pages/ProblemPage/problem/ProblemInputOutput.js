@@ -14,10 +14,10 @@ function ProblemInputOutput(props){
             <TableBody>
                 {p.input.map(i => {
                     return <TableRow key={i.key}>
-                        <TableCell>{p.input[i.key].ip.split('\n').map((line, index)=>{
+                        <TableCell>{p.input[i.key].text.split('\n').map((line, index)=>{
                             return <div key={index}>{line}</div>
                         })}</TableCell>
-                        <TableCell>{p.output[i.key].op.split('\n').map((line, index)=>{
+                        <TableCell>{p.output[i.key].text.split('\n').map((line, index)=>{
                             return <div key={index}>{line}</div>
                         })}</TableCell>
                     </TableRow>

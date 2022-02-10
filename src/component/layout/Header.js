@@ -11,11 +11,13 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import {useNavigate} from "react-router-dom";
 
 const pages = ['Home', 'Blogs', 'Contests', 'Problems', 'Ratings'];
 const settings = ['Profile', 'Account', 'Logout'];
 
 const Header = () => {
+    const navigate = useNavigate();
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -26,13 +28,25 @@ const Header = () => {
         setAnchorElUser(event.currentTarget);
     };
 
+    function gotoPage(page){
+        if(page === 'Profile') navigate('/profile', {state: {userHandle: localStorage.getItem("handle")}})
+        if(page === 'Contests') navigate('/contests');
+
+    }
+
     const handleCloseNavMenu = (page) => {
-        if(page) console.log('go to: '+page)
+        if(page) {
+            console.log('go to: '+page)
+            gotoPage(page)
+        }
         setAnchorElNav(null);
     };
 
     const handleCloseUserMenu = (page) => {
-        if(page) console.log('go to: '+page)
+        if(page) {
+            console.log('go to: '+page)
+            gotoPage(page)
+        }
         setAnchorElUser(null);
     };
 
