@@ -36,8 +36,8 @@ function ContestCreationPage(){
 
         const contest = {
             title,
-            startTime,
-            endTime,
+            startTime : new Date(startTime).getTime().toString(),
+            endTime: new Date(endTime).getTime().toString(),
             duration: endTime - startTime,
             announcement: announcement
         }
@@ -45,6 +45,9 @@ function ContestCreationPage(){
     }
 
     async function addNewContest(contest) {
+        console.log('create korar jonno pathacchi')
+        console.log(contest)
+        console.log('\n\n\n\n\n\n\n\n\n')
         const result = await createContest(contest)
         // if(result && result.contestId){
         //     console.log(result)

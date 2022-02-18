@@ -12,6 +12,7 @@ import ProfilePage from "./pages/profile/ProfilePage";
 import ProblemCreate from "./pages/ProblemCreationPage/ProblemCreate";
 import Contests from './pages/ContestsPage/Contests';
 import Contest from "./pages/ContestDetailPage/Contest";
+import ProblemListPage from "./pages/problemListPage/ProblemListPage";
 function App() {
     const problem = {
         problemId: 'c1p1',
@@ -50,6 +51,9 @@ function App() {
             <Route path='/problem' exact
                    element={<ProblemPage/>}>
             </Route>
+            <Route path='/problem/:contestId/:problemNo' exact
+                   element={<ProblemPage/>}>
+            </Route>
             <Route path="/submission"
                    element={<SubmissionPage submission={null}/>}>
             </Route>
@@ -77,8 +81,14 @@ function App() {
             <Route path="/contests"
                    element={<Contests/>}>
             </Route>
-            <Route path="/contest"
+            <Route path="/contest/:contestId" exact
                    element={<Contest/>}>
+            </Route>
+            <Route path="/problems"
+                   element={<ProblemListPage/>}>
+            </Route>
+            <Route path="/submission/:contestId/:problemId/:submissionId"
+                   element={<SubmissionPage/>}>
             </Route>
         </Routes>
     </div>

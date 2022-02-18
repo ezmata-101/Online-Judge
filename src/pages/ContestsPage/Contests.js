@@ -3,8 +3,6 @@ import {Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, Tab
 import {getContestDetail} from "../../contactServer/contest";
 import {useNavigate} from "react-router-dom";
 
-let data;
-
 function Contests(props){
     const navigate = useNavigate()
     const [upComing, setUpComing] = useState([])
@@ -14,8 +12,6 @@ function Contests(props){
 
 
     useEffect(() => {
-        if(data !== undefined) return
-        data = 1
         fetch('http://localhost:5000/contests/contests')
             .then(async res => {
                 const json = await res.json();
@@ -44,7 +40,7 @@ function Contests(props){
     async function handler(id) {
         console.log(id)
 
-        navigate('/contest', {state: {contestId: id}})
+        navigate('/contest/'+id)
         // const res = await getContestDetail({contestId: id})
         // console.log(res);
     }

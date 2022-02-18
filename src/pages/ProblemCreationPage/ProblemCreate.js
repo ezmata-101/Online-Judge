@@ -75,14 +75,11 @@ function ProblemCreate(props){
         }
         problem.input = input;
         problem.output = output;
-        // console.log(problem)
 
         createProblem(problem).then(res => {
             console.log('problem creation page a!')
             console.log(res)
         })
-
-        // navigate('/problem', {state: {problem: problem}});
     }
 
     return <div>

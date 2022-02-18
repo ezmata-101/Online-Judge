@@ -7,5 +7,5 @@ export async function createContest(contest){
 }
 
 export async function getContestDetail(contestId){
-    return postSomething(url+'/get/', contestId)
+    return postSomething(url+'/get', contestId)
 }

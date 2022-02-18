@@ -6,6 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
+import {FormControlLabel} from "@mui/material";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -30,7 +31,7 @@ const names = [
     'DP'
 ];
 
-export default function MultipleSelectCheckmarks(props) {
+export default function FilterProblemComponent(props) {
     const [categories, setCategories] = React.useState([]);
 
     const handleChange = (event) => {
@@ -40,28 +41,32 @@ export default function MultipleSelectCheckmarks(props) {
         setCategories(
             typeof value === 'string' ? value.split(',') : value,
         );
-        console.log(value);
-        props.onSelectCategories(value);
     };
+
+    function selectClosed() {
+        console.log(categories)
+    }
 
     return (
         <div>
-            <FormControl sx={{ m: 1, width: 300 }}>
+            <FormControl sx={{ m: 1, width: "100%" }}>
                 <InputLabel id="demo-multiple-checkbox-label">Categories</InputLabel>
                 <Select
-                    labelId="demo-multiple-checkbox-label"
+                    // labelId="demo-multiple-checkbox-label"
                     id="multiple-checkbox"
                     multiple
                     value={categories}
                     onChange={handleChange}
                     input={<OutlinedInput label="Category" />}
                     renderValue={(selected) => selected.join(', ')}
-                    MenuProps={MenuProps}
+                    onClose={selectClosed}
+                    // MenuProps={MenuProps}
                 >
                     {names.map((name) => (
                         <MenuItem key={name} value={name}>
-                            <Checkbox checked={categories.indexOf(name) > -1} />
-                            <ListItemText primary={name} />
+                            <FormControlLabel control={<Checkbox checked={categories.indexOf(name) > -1} />} label={name}></FormControlLabel>
+                            {/*<Checkbox checked={categories.indexOf(name) > -1} />*/}
+                            {/*<ListItemText primary={name} />*/}
                         </MenuItem>
                     ))}
                 </Select>

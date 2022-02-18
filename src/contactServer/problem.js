@@ -11,6 +11,6 @@ export async function getContestProblem(contestId){
     return result
 }
 export async function getProblemDetail(contestId, problemId){
-    const result = await postSomething(url+'problemDetail', {contestId, problemId})
+    const result = await postSomething(url+'problemDetail/', {contestId, problemId})
     return result
 }

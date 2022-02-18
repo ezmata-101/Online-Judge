@@ -1,45 +1,72 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {timeConverter} from '../../component/util/utilFunction.js';
-
+import {getSubmissionResult} from '../../contactServer/submission.js';
 
 function SubmissionPage(props){
-    const location = useLocation();
-    console.log(location.state)
-    if(location.state.submission == null) return <div>No submission sent</div>
-
-    const sub = location.state.submission;
-
-
+    const navigate = useNavigate();
+    const {contestId, problemId, submissionId} = useParams();
+    console.log({contestId, problemId, submissionId})
+    const [verdict, setVerdict] = useState('testing')
+    const [verdictDetail, setVerdictDetail] = useState(null)
+    const [code, setCode] = useState(null)
+    const [subTime, setSubTime] = useState(null)
+    useEffect(() => {
+        getSubmissionResult(contestId, problemId, submissionId)
+            .then(res => {
+                console.log(res)
+                if(res.status === 'success'){
+                    const submission = res.message.submission;
+                    setVerdict(submission.verdict);
+                    setVerdictDetail(submission.verdictDetail);
+                    setSubTime(submission.submissionTime);
+                    setCode(submission.code);
+                }
+            })
+        console.log(verdict+' '+verdictDetail)
+    })
+    function goToContest(){
+        navigate('/contest/'+contestId);
+    }
+    function goToProblem(){
+        navigate('/problem/'+contestId+'/'+problemId);
+    }
+    function getVerdictDetail(){
+        if(verdictDetail) return <div>
+            <pre>{verdictDetail}</pre>
+        </div>
+        return <div></div>
+    }
+    function getCode(){
+        if(code) return <div>
+            <h4>Submitted Code</h4>
+            <pre>{code}</pre>
+        </div>
+        return <div></div>
+    }
     return <div>
-        <div>
-            <Table>
-                <TableHead>
+        <Table>
+            <TableHead>
                 <TableRow>
-                    <TableCell>Submission</TableCell>
+                    <TableCell>Contest</TableCell>
                     <TableCell>Problem</TableCell>
-                    <TableCell>Time</TableCell>
-                    <TableCell>Language</TableCell>
+                    <TableCell>Submission Time</TableCell>
                     <TableCell>Verdict</TableCell>
-                    <TableCell>Time</TableCell>
-                    <TableCell>Memory</TableCell>
                 </TableRow>
-                </TableHead>
-                <TableBody><TableRow>
-                        <TableCell>{sub.submissionId}</TableCell>
-                        <TableCell>{sub.attemptedFor}</TableCell>
-                        <TableCell>{timeConverter(sub.submissionTime)}</TableCell>
-                        <TableCell>{sub.language}</TableCell>
-                        <TableCell>{sub.verdict}</TableCell>
-                        <TableCell>{sub.time}</TableCell>
-                        <TableCell>{sub.memory}</TableCell>
-                    </TableRow></TableBody>
-            </Table>
-        </div>
-        <div>
-            <pre>{sub.submittedFile}</pre>
-        </div>
+            </TableHead>
+            <TableBody>
+                <TableRow>
+                    <TableCell onClick={goToContest}>{contestId}</TableCell>
+                    <TableCell onClick={goToProblem}>{problemId}</TableCell>
+                    <TableCell>{timeConverter(subTime)}</TableCell>
+                    <TableCell>{verdict}</TableCell>
+                </TableRow>
+            </TableBody>
+
+        </Table>
+        {getVerdictDetail()}
+        {getCode()}
     </div>
 }
 export default SubmissionPage;
