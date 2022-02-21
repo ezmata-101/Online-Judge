@@ -2,7 +2,7 @@ import React, {useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {Button, TextField} from "@mui/material";
 import {login} from '../../contactServer/auth.js'
-
+import {showNotification} from '../../component/layout/showNotifications.js'
 function LoginPage(){
     const handle = useRef();
     const password = useRef();
@@ -30,6 +30,7 @@ function LoginPage(){
             // console.log(res)
             if(res.error){
                 setHint(res.error);
+                setTimeout(()=>setHint(null), 6000)
             }else{
                 setHint(null)
                 localStorage.setItem("accessToken", res.accessToken);
@@ -65,7 +66,10 @@ function LoginPage(){
                 >
                 </TextField>
             </div>
-            {hint && <div><p>{hint}</p></div>}
+            {hint && showNotification(hint, 'error')}
+            <div>
+                <a href={'/signup'}>Not an user yet?</a>
+            </div>
             <div className="submit-button">
                 <Button
                     variant="contained"

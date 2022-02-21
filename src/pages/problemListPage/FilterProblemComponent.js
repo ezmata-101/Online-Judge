@@ -45,6 +45,7 @@ export default function FilterProblemComponent(props) {
 
     function selectClosed() {
         console.log(categories)
+        props.onCategorySelect(categories)
     }
 
     return (

@@ -31,6 +31,7 @@ const Header = () => {
     function gotoPage(page){
         if(page === 'Profile') navigate('/profile', {state: {userHandle: localStorage.getItem("handle")}})
         if(page === 'Contests') navigate('/contests');
+        if(page === 'Problems') navigate('/problems');
 
     }
 

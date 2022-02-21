@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 
-function ProfilePage(props){
+function ProfilePage(props) {
     const location = useLocation();
     const [handle, setHandle] = useState('empty');
     const [name, setName] = useState('empty');
@@ -15,17 +15,17 @@ function ProfilePage(props){
 
     const handle1 = location.state.userHandle;
 
-    useEffect(() =>{
+    useEffect(() => {
         const options = {
             method: "GET",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json;charset=UTF-8',
-                'Authorization': 'BEARER '+localStorage.getItem("accessToken")
+                'Authorization': 'BEARER ' + localStorage.getItem("accessToken")
             }
         }
 
-        fetch("http://localhost:5000/users/"+handle1, options)
+        fetch("http://localhost:5000/users/" + handle1, options)
             .then(async res => {
                 const json = await res.json();
                 setHandle(json.handle)
@@ -37,12 +37,13 @@ function ProfilePage(props){
                 setRating(json.rating)
                 setEmail(json.email)
             }).catch(err => {
-                console.error(err)
+            console.error(err)
         })
-    }, [])
+    })
 
     return <div className={"profile-section"}>
         <table>
+            <tbody>
             <tr>
                 <td>Handle</td>
                 <td>{handle}</td>
@@ -75,7 +76,9 @@ function ProfilePage(props){
                 <td>email</td>
                 <td>{email}</td>
             </tr>
+            </tbody>
         </table>
     </div>
 }
+
 export default ProfilePage;

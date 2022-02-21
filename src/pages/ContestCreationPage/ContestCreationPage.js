@@ -11,6 +11,7 @@ import {DateTimePicker, LocalizationProvider} from "@mui/lab";
 import Contest from "../../models/Contest";
 import FileUploadComponent from "../../component/util/FileUploadComponent";
 import {createContest, getContestDetail} from '../../contactServer/contest.js'
+import Markdown from "markdown-to-jsx";
 
 function ContestCreationPage(){
     const contestTitle = useRef();
@@ -21,27 +22,27 @@ function ContestCreationPage(){
     const [hasAnnouncement, setHasAnnouncement] = useState(false)
     const [announcement, setAnnouncement] = useState(null)
 
-    function submitHandler(event){
+    async function submitHandler(event) {
         event.preventDefault();
         console.log()
         const title = contestTitle.current.value;
 
-        if(endTime <= startTime){
+        if (endTime <= startTime) {
             console.log("Erroror!")
             return;
-        }else{
+        } else {
             console.log('Time to thik ache.')
         }
 
 
         const contest = {
             title,
-            startTime : new Date(startTime).getTime().toString(),
+            startTime: new Date(startTime).getTime().toString(),
             endTime: new Date(endTime).getTime().toString(),
             duration: endTime - startTime,
             announcement: announcement
         }
-        addNewContest(contest)
+        await addNewContest(contest)
     }
 
     async function addNewContest(contest) {
@@ -49,78 +50,74 @@ function ContestCreationPage(){
         console.log(contest)
         console.log('\n\n\n\n\n\n\n\n\n')
         const result = await createContest(contest)
-        // if(result && result.contestId){
-        //     console.log(result)
-        //     const contestDetail = await getContestDetail({contestId: result.contestId});
-        // }
+        console.log(result)
         //TODO: Send request to server to create a contest and get a ContestID actually server will return a contestObject
-        navigate('/contests')
+        if(result.status === 'success'){
+            navigate('/contest-admin/'+result.message.contestId)
+        }
         // navigate('/submission', {state: {contest: new Contest(contest.title,'creator', -1, [], announcement, startTime, endTime, [])}})
     }
 
     function onSelectAnnouncement(selectedFile){
+        if(selectedFile !== null)
+        setHasAnnouncement(true)
         setAnnouncement(selectedFile)
         console.log("Announcement: \n"+selectedFile)
     }
 
     return <div className="create-contest-body">
         <h2>Contest Creation</h2>
-        <div className="form">
-            <div className="title">
-                <TextField
-                    className="title-text-field"
-                    required
-                    id="outlined-required"
-                    label="Contest Name"
-                    defaultValue="Title"
-                    inputRef={contestTitle}
-                >
-                </TextField>
-            </div>
-            <div className="start-time">
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DateTimePicker
-                        label="Contest Start Time"
-                        renderInput={(params) => <TextField {...params} />}
-                        value={startTime}
-                        onChange={(newValue) => {
-                            setStartTime(newValue);
-                        }}
-                    />
-                </LocalizationProvider>
-            </div>
-            <div className="end-time">
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DateTimePicker
-                        label="Contest End Time"
-                        renderInput={(params) => <TextField {...params} />}
-                        value={endTime}
-                        onChange={(newValue) => {
-                            setEndTime(newValue);
-                        }}
-                    />
-                </LocalizationProvider>
-            </div>
-
+        <div>
             <div>
-                <FormControlLabel control={
-                    <Checkbox
-                        checked={hasAnnouncement}
-                        onChange={(e) => setHasAnnouncement(e.target.checked)}
-                    />
-                } label="Announcement"/>
+                <div className="form">
+                    <div className="title">
+                        <TextField
+                            className="title-text-field"
+                            required
+                            id="outlined-required"
+                            label="Contest Name"
+                            defaultValue="Title"
+                            inputRef={contestTitle}
+                        >
+                        </TextField>
+                    </div>
+                    <div className="start-time">
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DateTimePicker
+                                label="Contest Start Time"
+                                renderInput={(params) => <TextField {...params} />}
+                                value={startTime}
+                                onChange={(newValue) => {
+                                    setStartTime(newValue);
+                                }}
+                            />
+                        </LocalizationProvider>
+                    </div>
+                    <div className="end-time">
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DateTimePicker
+                                label="Contest End Time"
+                                renderInput={(params) => <TextField {...params} />}
+                                value={endTime}
+                                onChange={(newValue) => {
+                                    setEndTime(newValue);
+                                }}
+                            />
+                        </LocalizationProvider>
+                    </div>
+                    <FileUploadComponent onSelectFile={onSelectAnnouncement}/>
+                    <div className="submit-button">
+                        <Button
+                            variant="contained"
+                            onClick={submitHandler}>
+                            Submit
+                        </Button>
+                    </div>
 
+                </div>
             </div>
-            {hasAnnouncement && <FileUploadComponent onSelectFile={onSelectAnnouncement}/>}
-
-
-
-            <div className="submit-button">
-                <Button
-                    variant="contained"
-                    onClick={submitHandler}>
-                    Submit
-                </Button>
+            <div>
+                {hasAnnouncement && announcement && <Markdown options={{ forceBlock: true }}>{announcement}</Markdown>}
             </div>
         </div>
     </div>

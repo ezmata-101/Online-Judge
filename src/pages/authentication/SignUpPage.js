@@ -2,6 +2,7 @@ import React, {useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {Button, TextField} from "@mui/material";
 import {signUp} from '../../contactServer/auth.js'
+import {showNotification} from '../../component/layout/showNotifications.js'
 
 function SignUpPage(){
     const handle = useRef();
@@ -14,7 +15,6 @@ function SignUpPage(){
     const navigate = useNavigate();
     const [hint, setHint] = useState(null);
     const [misMatchedPass, setMismatchedPass] = useState(false);
-
     function submitHandler(event){
         event.preventDefault();
         const body = {
@@ -25,10 +25,11 @@ function SignUpPage(){
             country: country.current.value,
             institute: institution.current.value,
         }
-        console.log(body);
+        // console.log(body);
 
         if(body.handle === "" || body.name === "" || body.password === "" || confirmedPassword.current.value === ""){
-            setHint("at least one required field remained empty");
+            setHint("empty required field!");
+            setTimeout(()=>setHint(null), 5000)
             return;
         }
         setHint(null)
@@ -44,7 +45,8 @@ function SignUpPage(){
             if(res.error){
                 setHint(res.error);
             }else{
-                setHint(res.message);
+                // setHint(res.message);
+                navigate('/login')
                 // localStorage.setItem("accessToken", res.accessToken);
             }
         });
@@ -90,9 +92,9 @@ function SignUpPage(){
             {createTextField("email", "email", email, false)}
 
 
+            <a href={'/login'}>Already an user?</a>
 
-
-            {hint && <div><p>{hint}</p></div>}
+            {hint && showNotification(hint, 'error')}
             <div className="submit-button">
                 <Button
                     variant="contained"

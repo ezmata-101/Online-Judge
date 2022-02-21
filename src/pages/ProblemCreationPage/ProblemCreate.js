@@ -2,10 +2,11 @@ import {isTestInput, isTestOutput, isSampleOutput, isSampleInput, isStatement, r
 import React, {useRef, useState} from "react";
 import {Button, TextField} from "@mui/material";
 import MultipleSelectCheckmarks from "./MultipleSelectCheckMarks";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {createProblem} from './../../contactServer/problem.js';
 
 function ProblemCreate(props){
+    const {contestId} = useParams();
     const navigate = useNavigate();
     const [inputs, setInputs] = useState([])
     const [outputs, setOutputs] = useState([])
@@ -14,7 +15,7 @@ function ProblemCreate(props){
     const [statement, setStatement] = useState(null)
     const [category, setCategory] = useState([])
     const problemName = useRef()
-    const contestId = useRef()
+    // const contestId = useRef()
     const problemNo = useRef()
     const timeLimit = useRef()
     const memoryLimit = useRef()
@@ -55,7 +56,7 @@ function ProblemCreate(props){
         const input = [];
         const output = [];
         const problem = {
-            contestId: parseInt(contestId.current.value),
+            contestId,
             name: problemName.current.value,
             problemID: '-1',
             problemNo: problemNo.current.value,
@@ -77,13 +78,14 @@ function ProblemCreate(props){
         problem.output = output;
 
         createProblem(problem).then(res => {
-            console.log('problem creation page a!')
             console.log(res)
+            if(res.status === 'success') navigate('/contest-admin/'+contestId)
         })
     }
 
     return <div>
         <div>
+            <h4>Add problem to contest: {contestId}</h4>
             <TextField
                 className="title-text-field"
                 required
@@ -91,15 +93,6 @@ function ProblemCreate(props){
                 label="Problem Name"
                 defaultValue="Interesting Problem Name"
                 inputRef={problemName}
-            >
-            </TextField>
-            <TextField
-                className="title-text-field"
-                required
-                id="outlined-required"
-                label="Contest Id"
-                defaultValue="-1"
-                inputRef={contestId}
             >
             </TextField>
             <TextField

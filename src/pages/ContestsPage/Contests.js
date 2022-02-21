@@ -2,6 +2,9 @@ import {useEffect, useState} from "react";
 import {Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {getContestDetail} from "../../contactServer/contest";
 import {useNavigate} from "react-router-dom";
+import AddIcon from '@mui/icons-material/Add';
+import Fab from '@mui/material/Fab'
+import {timeConverter} from '../../component/util/utilFunction.js'
 
 function Contests(props){
     const navigate = useNavigate()
@@ -44,6 +47,18 @@ function Contests(props){
         // const res = await getContestDetail({contestId: id})
         // console.log(res);
     }
+    const style = {
+        margin: 0,
+        top: 'auto',
+        right: 20,
+        bottom: 20,
+        left: 'auto',
+        position: 'fixed',
+    };
+
+    function addContest(){
+        navigate('/create-contest')
+    }
 
     function getTableForContest(contests, title){
         return <div>
@@ -64,8 +79,8 @@ function Contests(props){
                             return <TableRow key={contest.id}>
                                 <TableCell>{contest.id}</TableCell>
                                 <TableCell onClick={() => handler(contest.id)}>{contest.title}</TableCell>
-                                <TableCell>{contest.startTime}</TableCell>
-                                <TableCell>{contest.endTime}</TableCell>
+                                <TableCell>{timeConverter(contest.startTime)}</TableCell>
+                                <TableCell>{timeConverter(contest.endTime)}</TableCell>
                                 <TableCell>{contest.setter}</TableCell>
                             </TableRow>
                         })}
@@ -80,6 +95,12 @@ function Contests(props){
         {currentlyRunning.length > 0 && getTableForContest(currentlyRunning, "Running Contests")}
         {upComing.length > 0 && getTableForContest(upComing, "Upcoming Contests")}
         {previous.length > 0 && getTableForContest(previous, "Previous Contests")}
+        <Fab
+            style={style}
+            color={"primary"}
+            aria-label={"add"}
+            onClick={addContest}
+        ><AddIcon/></Fab>
     </div>
 }
 export default Contests;
