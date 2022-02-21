@@ -1,13 +1,12 @@
 import FilterProblemComponent from "./FilterProblemComponent";
 import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
 import {getAllProblems} from '../../contactServer/problem.js'
 function ProblemListPage(props){
     const [categories, setCategories] = useState([]);
-    // const useEffect = useEffect();
     const [problems, setProblems] = useState([]);
-
+    const navigate = useNavigate()
     useEffect(() => {
         getAllProblems(categories)
             .then(res => {
@@ -21,6 +20,10 @@ function ProblemListPage(props){
         setCategories(categories)
         console.log('in problem list page')
         console.log(categories)
+    }
+
+    function goToProblem(contestId, problemNo) {
+        navigate('/problem/'+contestId+'/'+problemNo)
     }
 
     return <div>Problems
@@ -44,7 +47,7 @@ function ProblemListPage(props){
                     {problems.map(problem => {
                         return <TableRow key={problem.contestId+'/'+problem.problemNo}>
                             <TableCell>{"C"+problem.contestId+"P"+problem.problemNo}</TableCell>
-                             <TableCell>{problem.name}</TableCell>
+                             <TableCell onClick={() => {goToProblem(problem.contestId, problem.problemNo)}}>{problem.name}</TableCell>
                             <TableCell>{problem.difficulty}</TableCell>
                             <TableCell>{problem.solve+"/"+problem.tries}</TableCell>
                         </TableRow>
