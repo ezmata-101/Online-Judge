@@ -18,3 +18,6 @@ export async function getAllProblems(category){
     const result = await postSomething(url+'get/', {category})
     return result
 }
+export async function deleteProblem(contestId, problemId){
+    return await postSomething(url+'delete', {contestId, problemId});
+}

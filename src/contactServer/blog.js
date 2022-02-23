@@ -1,6 +1,6 @@
 import {postSomething} from "./basicGetPost";
 
-const url = "http://localhost:3000/blogs/"
+const url = "http://localhost:5000/blogs/"
 
 export async function createBlog(blogTitle, blogBody) {
     const jsonBody = {blogTitle, blogBody, created: Date.now().toString()};
@@ -10,17 +10,18 @@ export async function createBlog(blogTitle, blogBody) {
 export async function createTutorial(blogTitle, contestId, problemId, blogBody) {
     return await postSomething(url + 'create-tutorial', {blogTitle, contestId, problemId, blogBody, created: Date.now()})
 }
+export async function getBlogs(){
+    const res = await fetch(url+'/blogs')
+    return await res.json()
+}
+export async function getBlogsByUser(handle){
+    return await postSomething(url+'/getUserBlogs', {handle})
+}
 export async function getBlog(blogId){
-    fetch(url+'get/'+blogId)
-        .then(async res => {
-            return await res.json()
-        })
+    return await postSomething(url+'/get/', {blogId})
 }
 export async function getBlogComments(blogId){
-    fetch(url+'getComments/'+blogId)
-        .then(async res => {
-            return await res.json()
-        })
+    return await postSomething(url+'getComments/', {blogId})
 }
 
 export async function postComment(blogId, comment){

@@ -1,5 +1,5 @@
 export async function postSomething(url, jsonBody){
-    console.log('in post something function!')
+    // console.log('in post something function!')
     const options = {
         method: 'POST',
         headers: {

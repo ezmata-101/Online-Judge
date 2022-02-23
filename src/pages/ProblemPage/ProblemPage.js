@@ -9,16 +9,19 @@ import FileUploadComponent from "../../component/util/FileUploadComponent";
 import Submission from "../../models/Submission";
 import {getProblemDetail} from "../../contactServer/problem";
 import {submit} from '../../contactServer/submission.js';
-
+import {showNotification} from '../../component/layout/showNotifications.js'
 function ProblemPage(props){
-    const location = useLocation();
-
     const {contestId, problemNo} = useParams();
-    //console.log(contestId+'/'+problemNo)
     const [problem, setProblem] = useState(null)
+    const [hint, setHint] = useState(null);
+    function notification(message){
+        setHint(message);
+        setTimeout(() => setHint(null), 5000);
+    }
     useEffect(async () => {
         const tempProblem = await getProblemDetail(contestId, problemNo);
         if(tempProblem.status === 'success') setProblem(tempProblem.problem);
+        else notification('Error!')
     }, [])
 
 
@@ -32,12 +35,12 @@ function ProblemPage(props){
 
         submit(contestId, problemNo, submissionFile)
             .then(response => {
-                if(response.status === 'success'){
+                if(response.status === 'success') {
                     console.log('submitted!')
                     submission.submissionId = response.message.submissionId;
                     submission.verdict = response.message.verdict;
-                    navigate('/submission/'+contestId+'/'+problemNo+'/'+submission.submissionId)
-                }
+                    navigate('/submission/' + contestId + '/' + problemNo + '/' + submission.submissionId)
+                }else notification('Failed to submit')
             })
 
         // navigate('/submission', {state: {submission: submission}})
@@ -56,6 +59,7 @@ function ProblemPage(props){
             <FileUploadComponent onSelectFile={onSelectFile} onFileUpload={onFileUpload}/>
             {props.prevSubs && <ProblemPrevSubs preSubs={props.prevSubs}/>}
         </div>
+        {hint && showNotification(hint, 'info')}
     </div>
 }
 

@@ -1,3 +1,5 @@
+import {postSomething} from "./basicGetPost";
+
 const axios = require('axios');
 
 const url = 'http://localhost:5000/users/'
@@ -21,6 +23,10 @@ async function signUp(signUpRequestBody) {
             console.error(err)
         })
     return response
+}
+
+export async function getUserDetail(handle){
+    return await postSomething(url + 'getUser', {handle});
 }
 
 async function login(handle, password) {

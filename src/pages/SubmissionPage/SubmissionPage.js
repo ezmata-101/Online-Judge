@@ -3,7 +3,7 @@ import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {timeConverter} from '../../component/util/utilFunction.js';
 import {getSubmissionResult} from '../../contactServer/submission.js';
-
+import {showNotification} from '../../component/layout/showNotifications.js'
 function SubmissionPage(props){
     const navigate = useNavigate();
     const {contestId, problemId, submissionId} = useParams();
@@ -12,6 +12,11 @@ function SubmissionPage(props){
     const [verdictDetail, setVerdictDetail] = useState(null)
     const [code, setCode] = useState(null)
     const [subTime, setSubTime] = useState(null)
+    const [hint, setHint] = useState(null);
+    function notification(message){
+        setHint(message);
+        setTimeout(() => setHint(null), 5000);
+    }
     useEffect(() => {
         getSubmissionResult(contestId, problemId, submissionId)
             .then(res => {
@@ -22,7 +27,7 @@ function SubmissionPage(props){
                     setVerdictDetail(submission.verdictDetail);
                     setSubTime(submission.submissionTime);
                     setCode(submission.code);
-                }
+                }else showNotification('Failed to fetch submission')
             })
         console.log(verdict+' '+verdictDetail)
     })
@@ -68,6 +73,7 @@ function SubmissionPage(props){
         </Table>
         {getVerdictDetail()}
         {getCode()}
+        {hint && showNotification(hint, 'info')}
     </div>
 }
 export default SubmissionPage;

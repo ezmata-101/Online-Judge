@@ -4,7 +4,7 @@ import {Button, TextField} from "@mui/material";
 import MultipleSelectCheckmarks from "./MultipleSelectCheckMarks";
 import {useNavigate, useParams} from "react-router-dom";
 import {createProblem} from './../../contactServer/problem.js';
-
+import {showNotification} from '../../component/layout/showNotifications.js'
 function ProblemCreate(props){
     const {contestId} = useParams();
     const navigate = useNavigate();
@@ -15,17 +15,28 @@ function ProblemCreate(props){
     const [statement, setStatement] = useState(null)
     const [category, setCategory] = useState([])
     const problemName = useRef()
+    const [defaultProblemName, setDefaultProblemName] = useState('Problem Name');
     // const contestId = useRef()
     const problemNo = useRef()
     const timeLimit = useRef()
     const memoryLimit = useRef()
     const rating = useRef()
+    const [hint, setHint] = useState(null);
+    function notification(message){
+        setHint(message);
+        setTimeout(() => setHint(null), 5000);
+    }
     // const [contestID, setContestId] = useState(null)
     // const [problemNo, setProblemNo] = useState(null)
     // const [timeLimit, setTimeLimit] = useState(null)
     // const [memoryLimit, setMemoryLimit] = useState(null)
     async function onFolderSelect(event) {
         const numOfFiles = event.target.files.length;
+        // console.log(event.target.files[0].webkitRelativePath.split('/')[0])
+        if(problemName.current.value === 'Problem Name'){
+            problemName.current.value = event.target.files[0].webkitRelativePath.split('/')[0];
+            // setDefaultProblemName(event.target.files[0].webkitRelativePath.split('/')[0])
+        }
         const inputs = [];
         const outputs = [];
         const sampleInputs = [];
@@ -80,6 +91,7 @@ function ProblemCreate(props){
         createProblem(problem).then(res => {
             console.log(res)
             if(res.status === 'success') navigate('/contest-admin/'+contestId)
+            else notification(res.message)
         })
     }
 
@@ -91,7 +103,7 @@ function ProblemCreate(props){
                 required
                 id="outlined-required"
                 label="Problem Name"
-                defaultValue="Interesting Problem Name"
+                defaultValue={defaultProblemName}
                 inputRef={problemName}
             >
             </TextField>
@@ -162,6 +174,7 @@ function ProblemCreate(props){
                 Create Problem
             </Button>
         </div>
+        {hint && showNotification(hint, 'info')}
     </div>
 }
 export default ProblemCreate;

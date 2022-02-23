@@ -1,45 +1,60 @@
 import {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
-
+import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {getUserDetail} from './../../contactServer/auth.js'
+import {getUserSubmissions} from "../../contactServer/submission.js";
+import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
+import {timeConverter} from "../../component/util/utilFunction";
+import {showNotification} from '../../component/layout/showNotifications.js'
 function ProfilePage(props) {
-    const location = useLocation();
-    const [handle, setHandle] = useState('empty');
-    const [name, setName] = useState('empty');
-    const [joinDate, setJoinDate] = useState(" ");
-    const [rating, setRating] = useState(" ");
-    const [lastLogin, setLastLogin] = useState(" ");
-    const [institute, setInstitute] = useState('-');
-    const [country, setCountry] = useState('-');
-    const [email, setEmail] = useState('-');
-
-
-    const handle1 = location.state.userHandle;
-
-    useEffect(() => {
-        const options = {
-            method: "GET",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json;charset=UTF-8',
-                'Authorization': 'BEARER ' + localStorage.getItem("accessToken")
-            }
-        }
-
-        fetch("http://localhost:5000/users/" + handle1, options)
-            .then(async res => {
-                const json = await res.json();
-                setHandle(json.handle)
-                setName(json.name)
-                setJoinDate(json.joinDate)
-                setLastLogin(json.lastLogin)
-                setCountry(json.country)
-                setInstitute(json.institute)
-                setRating(json.rating)
-                setEmail(json.email)
-            }).catch(err => {
-            console.error(err)
-        })
+    const navigate = useNavigate();
+    const [profile, setProfile] = useState({
+        name: '',
+        joinDate: '0',
+        country: '',
+        email: '',
+        institute: '',
+        lastLogin: '0',
+        rating: -1
     })
+    const [hint, setHint] = useState(null);
+    function notification(message){
+        setHint(message);
+        setTimeout(() => setHint(null), 5000);
+    }
+    const {handle} = useParams();
+    const [submissions, setSubmissions] = useState([])
+    const [sub, setSub] = useState(0)
+    const [ac, setAc] = useState(0)
+    useEffect(() => {
+        getUserDetail(handle)
+            .then(res => {
+                if(res.status === 'success'){
+                    setProfile(res.profileDetail)
+                }else notification('Failed')
+            })
+        getUserSubmissions(handle)
+            .then(res => {
+                console.log(res)
+                if(res.status === 'success'){
+                    setSubmissions(res.message);
+                    setSub(res.message.length)
+                    setAc(res.message.filter(r => r.verdict === 'AC').length);
+                }else notification('failed')
+            })
+    }, [])
+
+
+    function goToContest(contestId) {
+        navigate('/contest/'+contestId)
+    }
+
+    function goToProblem(contestId, problemId) {
+        navigate('/problem/'+contestId+'/'+problemId)
+    }
+
+    function goToSubmission(contestId, problemId, submissionId) {
+        navigate('/submission/'+contestId+'/'+problemId+'/'+submissionId)
+    }
 
     return <div className={"profile-section"}>
         <table>
@@ -50,34 +65,63 @@ function ProfilePage(props) {
             </tr>
             <tr>
                 <td>Name</td>
-                <td>{name}</td>
+                <td>{profile.name}</td>
             </tr>
             <tr>
                 <td>Rating</td>
-                <td>{rating}</td>
+                <td>{profile.rating}</td>
             </tr>
             <tr>
                 <td>Join Date</td>
-                <td>{joinDate}</td>
+                <td>{profile.joinDate}</td>
             </tr>
             <tr>
                 <td>Last Login</td>
-                <td>{lastLogin}</td>
+                <td>{profile.lastLogin}</td>
             </tr>
             <tr>
                 <td>Institute</td>
-                <td>{institute}</td>
+                <td>{profile.institute}</td>
             </tr>
             <tr>
                 <td>Country</td>
-                <td>{country}</td>
+                <td>{profile.country}</td>
             </tr>
             <tr>
                 <td>email</td>
-                <td>{email}</td>
+                <td>{profile.email}</td>
             </tr>
             </tbody>
         </table>
+        <h4>User Submissions</h4>
+        <h5>Total Submissions: {sub}</h5>
+        <h5 style={{color:'green'}}>Accepted: {ac}</h5>
+        <div>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>No</TableCell>
+                        <TableCell>Contest</TableCell>
+                        <TableCell>Problem</TableCell>
+                        <TableCell>Submission Time</TableCell>
+                        <TableCell>Verdict</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {submissions.map((s, index)=> {
+                        return <TableRow key={index}>
+                            <TableCell>{index+1}</TableCell>
+                            <TableCell onClick={()=>goToContest(s.contestId)}>{s.contestId}</TableCell>
+                            <TableCell onClick={()=>goToProblem(s.contestId, s.problemId)}>{s.name}</TableCell>
+                            <TableCell onClick={()=>goToSubmission(s.contestId, s.problemId, s.submissionId)}>{timeConverter(s.subTime)}</TableCell>
+                            <TableCell>{s.verdict}</TableCell>
+                        </TableRow>
+                    })}
+                </TableBody>
+            </Table>
+        </div>
+        {hint && showNotification(hint, 'info')}
+
     </div>
 }
 

@@ -14,6 +14,10 @@ function SignUpPage(){
     const email = useRef();
     const navigate = useNavigate();
     const [hint, setHint] = useState(null);
+    function notification(message){
+        setHint(message);
+        setTimeout(() => setHint(null), 5000);
+    }
     const [misMatchedPass, setMismatchedPass] = useState(false);
     function submitHandler(event){
         event.preventDefault();
@@ -28,11 +32,9 @@ function SignUpPage(){
         // console.log(body);
 
         if(body.handle === "" || body.name === "" || body.password === "" || confirmedPassword.current.value === ""){
-            setHint("empty required field!");
-            setTimeout(()=>setHint(null), 5000)
+            notification("Check Required Fields")
             return;
         }
-        setHint(null)
 
         setMismatchedPass(body.password !== confirmedPassword.current.value);
         if(misMatchedPass) return;
@@ -42,12 +44,10 @@ function SignUpPage(){
     function attemptToSignUp(signUpRequest){
         signUp(signUpRequest).then(res => {
             console.log(res);
-            if(res.error){
-                setHint(res.error);
-            }else{
-                // setHint(res.message);
+            if(res.status === 'success') {
                 navigate('/login')
-                // localStorage.setItem("accessToken", res.accessToken);
+            }else{
+                notification(res.message)
             }
         });
     }
@@ -94,7 +94,6 @@ function SignUpPage(){
 
             <a href={'/login'}>Already an user?</a>
 
-            {hint && showNotification(hint, 'error')}
             <div className="submit-button">
                 <Button
                     variant="contained"
@@ -104,6 +103,7 @@ function SignUpPage(){
             </div>
 
         </div>
+        {hint && showNotification(hint, 'info')}
     </div>
 }
 

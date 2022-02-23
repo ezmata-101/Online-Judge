@@ -8,12 +8,10 @@ function LoginPage(){
     const password = useRef();
     const navigate = useNavigate();
     const [hint, setHint] = useState(null);
-    //
-    // const [startTime, setStartTime] = useState(new Date());
-    // const [endTime, setEndTime] = useState(new Date());
-    // const [hasAnnouncement, setHasAnnouncement] = useState(false)
-    // const [announcement, setAnnouncement] = useState(null)
-
+    function notification(message){
+        setHint(message);
+        setTimeout(() => setHint(null), 5000);
+    }
     function submitHandler(event){
         event.preventDefault();
         console.log()
@@ -24,19 +22,15 @@ function LoginPage(){
     }
 
     function attemptToLogin(handle, password){
-        console.log("Send Request to server to create a contest")
-
         login(handle, password).then(res => {
-            // console.log(res)
-            if(res.error){
-                setHint(res.error);
-                setTimeout(()=>setHint(null), 6000)
-            }else{
+            console.log(res)
+            if(res.status === 'success'){
                 setHint(null)
                 localStorage.setItem("accessToken", res.accessToken);
                 localStorage.setItem("handle", handle);
-                // const accessToken = res.accessToken;
-                navigate('/profile', {state: {userHandle: handle}})
+                navigate('/profile/'+handle)
+            }else{
+                notification(res.message)
             }
         });
     }
@@ -66,7 +60,7 @@ function LoginPage(){
                 >
                 </TextField>
             </div>
-            {hint && showNotification(hint, 'error')}
+            {hint && showNotification(hint, 'info')}
             <div>
                 <a href={'/signup'}>Not an user yet?</a>
             </div>

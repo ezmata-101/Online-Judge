@@ -13,6 +13,7 @@ import ProblemListPage from "../../pages/problemListPage/ProblemListPage";
 import React from "react";
 import BlogCreatePage from "../../pages/BlogCreatePage/BlogCreatePage";
 import BlogPage from "../../pages/BlogPage/BlogPage";
+import BlogsPage from "../../pages/BlogsPage/BlogsPage";
 
 export default function MyRouters() {
     return (
@@ -34,9 +35,6 @@ export default function MyRouters() {
             </Route>
             <Route path="/signup"
                    element={<SignUpPage/>}>
-            </Route>
-            <Route path="/profile"
-                   element={<ProfilePage/>}>
             </Route>
             <Route path="/contest-admin/:contestId" exact
                    element={<ContestAdminPage/>}>
@@ -62,6 +60,12 @@ export default function MyRouters() {
             <Route path="/blog/:blogId"
                    element={<BlogPage/>}>
             </Route>
+            <Route path="/profile/:handle" exact
+                   element={<ProfilePage/>}>
+            </Route>
+                <Route path="/blogs" exact
+                       element={<BlogsPage/>}>
+                </Route>
         </Routes>
     )
 }

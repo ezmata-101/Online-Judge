@@ -12,10 +12,15 @@ import Contest from "../../models/Contest";
 import FileUploadComponent from "../../component/util/FileUploadComponent";
 import {createContest, getContestDetail} from '../../contactServer/contest.js'
 import Markdown from "markdown-to-jsx";
-
+import {showNotification} from '../../component/layout/showNotifications.js'
 function ContestCreationPage(){
     const contestTitle = useRef();
     const navigate = useNavigate();
+    const [hint, setHint] = useState(null);
+    function notification(message){
+        setHint(message);
+        setTimeout(() => setHint(null), 5000);
+    }
 
     const [startTime, setStartTime] = useState(new Date());
     const [endTime, setEndTime] = useState(new Date());
@@ -28,10 +33,8 @@ function ContestCreationPage(){
         const title = contestTitle.current.value;
 
         if (endTime <= startTime) {
-            console.log("Erroror!")
+            notification('Check times')
             return;
-        } else {
-            console.log('Time to thik ache.')
         }
 
 
@@ -54,7 +57,7 @@ function ContestCreationPage(){
         //TODO: Send request to server to create a contest and get a ContestID actually server will return a contestObject
         if(result.status === 'success'){
             navigate('/contest-admin/'+result.message.contestId)
-        }
+        }else notification('Error!')
         // navigate('/submission', {state: {contest: new Contest(contest.title,'creator', -1, [], announcement, startTime, endTime, [])}})
     }
 
@@ -120,6 +123,7 @@ function ContestCreationPage(){
                 {hasAnnouncement && announcement && <Markdown options={{ forceBlock: true }}>{announcement}</Markdown>}
             </div>
         </div>
+        {hint && showNotification(hint, 'info')}
     </div>
 }
 

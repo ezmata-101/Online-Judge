@@ -5,12 +5,17 @@ import {useNavigate} from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab'
 import {timeConverter} from '../../component/util/utilFunction.js'
-
+import {showNotification} from '../../component/layout/showNotifications.js'
 function Contests(props){
     const navigate = useNavigate()
     const [upComing, setUpComing] = useState([])
     const [currentlyRunning, setCurrentlyRunning] = useState([])
     const [previous, setPrevious] = useState([])
+    const [hint, setHint] = useState(null);
+    function notification(message){
+        setHint(message);
+        setTimeout(() => setHint(null), 5000);
+    }
 
 
 
@@ -37,6 +42,7 @@ function Contests(props){
                 setCurrentlyRunning(current);
                 setPrevious(prev)
             })
+
     }, [])
 
 
@@ -101,6 +107,7 @@ function Contests(props){
             aria-label={"add"}
             onClick={addContest}
         ><AddIcon/></Fab>
+        {hint && showNotification(hint, 'info')}
     </div>
 }
 export default Contests;

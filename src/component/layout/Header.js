@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import {useNavigate} from "react-router-dom";
+import {useState} from "react";
 
 const pages = ['Home', 'Blogs', 'Contests', 'Problems', 'Ratings'];
 const settings = ['Profile', 'Account', 'Logout'];
@@ -29,10 +30,18 @@ const Header = () => {
     };
 
     function gotoPage(page){
-        if(page === 'Profile') navigate('/profile', {state: {userHandle: localStorage.getItem("handle")}})
+        if(page === 'Profile') {
+            const handle = localStorage.getItem('handle');
+            if(handle && handle !== '') navigate('/profile/'+handle, {state: {userHandle: localStorage.getItem("handle")}})
+        }
         if(page === 'Contests') navigate('/contests');
         if(page === 'Problems') navigate('/problems');
-
+        if(page === 'Blogs' || page === 'Home') navigate('/blogs');
+        if(page === 'Logout'){
+            localStorage.setItem('accessToken', '')
+            localStorage.setItem('handle', '')
+            navigate('/');
+        }
     }
 
     const handleCloseNavMenu = (page) => {

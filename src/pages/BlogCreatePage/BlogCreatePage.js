@@ -1,9 +1,10 @@
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import MDEditor from '@uiw/react-md-editor';
 import {Button, Checkbox, FormControlLabel, TextField} from "@mui/material";
 import FileUploadComponent from "../../component/util/FileUploadComponent";
 import {createBlog, createTutorial} from "../../contactServer/blog";
 import {useNavigate} from "react-router-dom";
+import {showNotification} from '../../component/layout/showNotifications.js'
 
 export default function BlogCreatePage() {
     const [blogBody, setBlogBody] = React.useState("**Hello world!!!**");
@@ -12,18 +13,28 @@ export default function BlogCreatePage() {
     const contestId = useRef();
     const problemNo = useRef();
     const navigate = useNavigate()
-    function handleSubmit(event){
-        event.preventDefault()
-        if(blogTitle.current.value === '') return;
-        if(isTutorial){
-            if(contestId.current.value === '' || problemNo.current.vaule === '')return
-            createTutorial(blogTitle.current.value, contestId.current.value, problemNo.current.value, blogBody)
-                .then(res => {
-                    if(res.status === 'success') navigate('/blog/'+res.message.blogId)
-                })
-        }else{
+    const [hint, setHint] = useState(null);
+    function notification(message){
+        setHint(message);
+        setTimeout(() => setHint(null), 5000);
+    }
+    async function handleSubmit() {
+        if (blogTitle.current.value === '') return;
+        if (isTutorial) {
+            if (contestId.current.value === '' || problemNo.current.vaule === '') {
+                showNotification('Contest and Problem ID')
+                return;
+            }
+            const res = await createTutorial(blogTitle.current.value, contestId.current.value, problemNo.current.value, blogBody)
+            if(res.status === 'success'){
+                navigate('/blog/'+res.message)
+            }else notification(res.message);
+        } else {
             createBlog(blogTitle.current.value, blogBody).then(res => {
-                navigate('/blog/'+res.message.blogId)
+                console.log(res)
+                if (res.status === 'success') {
+                    navigate('/blog/' + res.message)
+                }else notification(res.message);
             })
         }
     }
@@ -66,6 +77,7 @@ export default function BlogCreatePage() {
                 onChange={setBlogBody}
             /></div>
             <div><Button onClick={handleSubmit} variant="contained">Create Blog</Button></div>
+            {hint && showNotification(hint, 'info')}
         </div>
     );
 }

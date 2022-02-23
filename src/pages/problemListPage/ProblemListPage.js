@@ -3,16 +3,22 @@ import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
 import {getAllProblems} from '../../contactServer/problem.js'
+import {showNotification} from '../../component/layout/showNotifications.js'
 function ProblemListPage(props){
     const [categories, setCategories] = useState([]);
     const [problems, setProblems] = useState([]);
     const navigate = useNavigate()
+    const [hint, setHint] = useState(null);
+    function notification(message){
+        setHint(message);
+        setTimeout(() => setHint(null), 5000);
+    }
     useEffect(() => {
         getAllProblems(categories)
             .then(res => {
                 if(res.status === 'success'){
                     setProblems(res.message.problems)
-                }
+                }else notification('Failed to fetch problems')
             })
     }, [categories])
 
@@ -56,6 +62,7 @@ function ProblemListPage(props){
             </Table>
         </div>
         </div>
+        {hint && showNotification(hint, 'info')}
     </div></div>
 }
 export default ProblemListPage;
