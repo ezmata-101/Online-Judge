@@ -2,8 +2,8 @@ import {useEffect, useState} from "react";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {getUserDetail} from './../../contactServer/auth.js'
 import {getUserSubmissions} from "../../contactServer/submission.js";
-import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
-import {timeConverter} from "../../component/util/utilFunction";
+import {Button, Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
+import {timeConverter, timeSince} from "../../component/util/utilFunction";
 import {showNotification} from '../../component/layout/showNotifications.js'
 function ProfilePage(props) {
     const navigate = useNavigate();
@@ -56,64 +56,70 @@ function ProfilePage(props) {
         navigate('/submission/'+contestId+'/'+problemId+'/'+submissionId)
     }
 
-    return <div className={"profile-section"}>
-        <table>
-            <tbody>
-            <tr>
-                <td>Handle</td>
-                <td>{handle}</td>
-            </tr>
-            <tr>
-                <td>Name</td>
-                <td>{profile.name}</td>
-            </tr>
-            <tr>
-                <td>Rating</td>
-                <td>{profile.rating}</td>
-            </tr>
-            <tr>
-                <td>Join Date</td>
-                <td>{profile.joinDate}</td>
-            </tr>
-            <tr>
-                <td>Last Login</td>
-                <td>{profile.lastLogin}</td>
-            </tr>
-            <tr>
-                <td>Institute</td>
-                <td>{profile.institute}</td>
-            </tr>
-            <tr>
-                <td>Country</td>
-                <td>{profile.country}</td>
-            </tr>
-            <tr>
-                <td>email</td>
-                <td>{profile.email}</td>
-            </tr>
-            </tbody>
-        </table>
-        <h4>User Submissions</h4>
-        <h5>Total Submissions: {sub}</h5>
-        <h5 style={{color:'green'}}>Accepted: {ac}</h5>
+    return <div className={"profile-section"} style={{justifyItems:'center'}}>
+        <div style={{width:'100%'}}>
+            <div style={{width:"50%", margin: '0 auto'}}>
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>Handle</td>
+                        <td style={{paddingLeft: '10px'}}>{handle}</td>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td style={{paddingLeft: '10px'}}>{profile.name}</td>
+                    </tr>
+                    <tr>
+                        <td>Rating</td>
+                        <td style={{paddingLeft: '10px'}}>{profile.rating}</td>
+                    </tr>
+                    <tr>
+                        <td>Join Date</td>
+                        <td style={{paddingLeft: '10px'}}>{timeSince(Date.parse(profile.joinDate))+' ago'}</td>
+                    </tr>
+                    <tr>
+                        <td>Last Login</td>
+                        <td style={{paddingLeft: '10px'}}>{timeSince(Date.parse(profile.lastLogin))+' ago'}</td>
+                    </tr>
+                    <tr>
+                        <td>Institute</td>
+                        <td style={{paddingLeft: '10px'}}>{profile.institute}</td>
+                    </tr>
+                    <tr>
+                        <td>Country</td>
+                        <td style={{paddingLeft: '10px'}}>{profile.country}</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td style={{paddingLeft: '10px'}}>{profile.email}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <h2 style={{textAlign: 'center', marginTop: '25px'}}>User Submission</h2>
+        <div>
+            <div><b style={{fontSize: '18px'}}>Total Submissions:</b> <i>{sub}</i></div>
+            <div style={{color:'green'}}><b style={{fontSize: '18px'}}>Accepted: </b><i>{ac}</i></div>
+        </div>
         <div>
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>No</TableCell>
-                        <TableCell>Contest</TableCell>
-                        <TableCell>Problem</TableCell>
-                        <TableCell>Submission Time</TableCell>
-                        <TableCell>Verdict</TableCell>
+                        <TableCell><b>No</b></TableCell>
+                        <TableCell><b>Contest</b></TableCell>
+                        <TableCell><b>Problem</b></TableCell>
+                        <TableCell><b>Submission Time</b></TableCell>
+                        <TableCell><b>Verdict</b></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {submissions.map((s, index)=> {
                         return <TableRow key={index}>
                             <TableCell>{index+1}</TableCell>
-                            <TableCell onClick={()=>goToContest(s.contestId)}>{s.contestId}</TableCell>
-                            <TableCell onClick={()=>goToProblem(s.contestId, s.problemId)}>{s.name}</TableCell>
-                            <TableCell onClick={()=>goToSubmission(s.contestId, s.problemId, s.submissionId)}>{timeConverter(s.subTime)}</TableCell>
+                            <TableCell onClick={()=>goToContest(s.contestId)}><Button>{s.contestId}</Button></TableCell>
+                            <TableCell onClick={()=>goToProblem(s.contestId, s.problemId)}><Button>{s.name}</Button></TableCell>
+                            <TableCell onClick={()=>goToSubmission(s.contestId, s.problemId, s.submissionId)}><Button>{timeConverter(s.subTime)}</Button></TableCell>
                             <TableCell>{s.verdict}</TableCell>
                         </TableRow>
                     })}

@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {showNotification} from '../../component/layout/showNotifications.js'
-import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
+import {Button, Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 
 function RatingPage(){
@@ -26,23 +26,23 @@ function RatingPage(){
     }
 
     return <div>
-        <h3>Rating</h3>
+        <h1 style={{textAlign: 'center'}}>RATING</h1>
         <Table>
             <TableHead>
                 <TableRow>
-                    <TableCell>Rank</TableCell>
-                    <TableCell>Handle</TableCell>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Rating</TableCell>
+                    <TableCell><b>RANK</b></TableCell>
+                    <TableCell><b>HANDLE</b></TableCell>
+                    <TableCell><b>NAME</b></TableCell>
+                    <TableCell><b>RATING</b></TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
                 {ratings.map((user, index) => {
                     return <TableRow key={index} onClick={() => goToProfile(user.handle)}>
-                        <TableCell>{index+1}</TableCell>
-                        <TableCell>{user.handle}</TableCell>
-                        <TableCell>{user.name}</TableCell>
-                        <TableCell>{user.rating}</TableCell>
+                        <TableCell><Button>{index+1}</Button></TableCell>
+                        <TableCell><Button>{user.handle}</Button></TableCell>
+                        <TableCell><Button>{user.name}</Button></TableCell>
+                        <TableCell><Button>{user.rating}</Button></TableCell>
                     </TableRow>
                 })}
             </TableBody>

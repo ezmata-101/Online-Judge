@@ -7,13 +7,15 @@ import ProblemInputOutput from "./problem/ProblemInputOutput";
 import ProblemPrevSubs from "./problem/ProblemPrevSubs";
 import FileUploadComponent from "../../component/util/FileUploadComponent";
 import Submission from "../../models/Submission";
-import {getProblemDetail} from "../../contactServer/problem";
+import {getProblemDetail, getProblemTutorial} from "../../contactServer/problem";
 import {submit} from '../../contactServer/submission.js';
 import {showNotification} from '../../component/layout/showNotifications.js'
+import {Button} from "@mui/material";
 function ProblemPage(props){
     const {contestId, problemNo} = useParams();
     const [problem, setProblem] = useState(null)
     const [hint, setHint] = useState(null);
+    const [tutorial, setTutorial] = useState(null);
     function notification(message){
         setHint(message);
         setTimeout(() => setHint(null), 5000);
@@ -22,6 +24,10 @@ function ProblemPage(props){
         const tempProblem = await getProblemDetail(contestId, problemNo);
         if(tempProblem.status === 'success') setProblem(tempProblem.problem);
         else notification('Error!')
+
+        const tempTutorial = await getProblemTutorial(contestId, problemNo);
+        if(tempTutorial.status === 'success') setTutorial(tempTutorial.blogId);
+
     }, [])
 
 
@@ -49,17 +55,25 @@ function ProblemPage(props){
 
 
     if (problem == null) return <div>no problem found</div>
-    return <div className="problem" style={{"display": "flex"}}>
-        <div className={"problem-body"}>
-            <ProblemHeader problem={problem}/>
-            <ProblemStatement statement={problem.statement}/>
+
+    function goToTutorial() {
+        navigate('/blog/'+tutorial);
+    }
+
+    return <div className="problem" style={{margin:'10px'}}>
+        <ProblemHeader problem={problem}/>
+        <div className={"problem-body"} style={{width:'90%', marginLeft: '5%'}}>
+            <div style={{display: 'flex', marginTop:'20px'}}>
+                <ProblemStatement statement={problem.statement}/>
+                <FileUploadComponent onSelectFile={onSelectFile} onFileUpload={onFileUpload}/>
+            </div>
             <ProblemInputOutput problem={problem}/>
+            <div className={"right-panel"}>
+                {props.prevSubs && <ProblemPrevSubs preSubs={props.prevSubs}/>}
+            </div>
+            {hint && showNotification(hint, 'info')}
+            {tutorial && <div><Button onClick={goToTutorial}>Go To Tutorial</Button></div>}
         </div>
-        <div className={"right-panel"}>
-            <FileUploadComponent onSelectFile={onSelectFile} onFileUpload={onFileUpload}/>
-            {props.prevSubs && <ProblemPrevSubs preSubs={props.prevSubs}/>}
-        </div>
-        {hint && showNotification(hint, 'info')}
     </div>
 }
 

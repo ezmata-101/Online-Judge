@@ -1,5 +1,5 @@
-import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
-import {useState, useEffect} from "react";
+import {Button, Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
+import React, {useState, useEffect} from "react";
 import {getContestDetail, getContestStanding} from "../../contactServer/contest";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {getContestProblem, getProblemDetail} from "../../contactServer/problem";
@@ -48,12 +48,15 @@ function Contest(props){
             })
 
     }, [])
-    async function getProblem(contestId, problemNo) {
+    async function goToProblemDetail(problemNo) {
         console.log(contestId + ' ' + problemNo)
         // navigate('/problem', {state: {contestId, problemNo}})
         // const problem = await getProblemDetail(contestId, problemNo)
         // console.log(problem)
         navigate('/problem/'+contestId+"/"+problemNo)
+    }
+    function goToHandle(handle) {
+        navigate('/profile/'+handle)
     }
     function createTable(problems){
         if(problems == null) return <div>No problems added yet</div>
@@ -61,17 +64,17 @@ function Contest(props){
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>No</TableCell>
-                        <TableCell>Problem Name</TableCell>
-                        <TableCell>Difficulty</TableCell>
-                        <TableCell>Solve/Try</TableCell>
+                        <TableCell><b>No</b></TableCell>
+                        <TableCell><b>Problem Name</b></TableCell>
+                        <TableCell><b>Difficulty</b></TableCell>
+                        <TableCell><b>Solve/Try</b></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {problems.map(problem => {
                         return <TableRow key={problem.problemNo}>
                             <TableCell>{problem.problemNo}</TableCell>
-                            <TableCell onClick={() => {getProblem(contestId, problem.problemNo)}}>{problem.name}</TableCell>
+                            <TableCell onClick={() => goToProblemDetail(problem.problemNo)}><Button>{problem.name}</Button></TableCell>
                             <TableCell>{problem.difficulty}</TableCell>
                             <TableCell>{problem.solve}/{problem.tries}</TableCell>
                         </TableRow>
@@ -82,13 +85,14 @@ function Contest(props){
     }
 
     return <div>
-        Contest Detail Page
         {
             contest && <div>
-                <h3>{contest.title}</h3>
-                <h4>{contest.setter}</h4>
-                <h4>Start: {timeConverter(contest.startTime)}</h4>
-                <h4>End: {timeConverter(contest.endTime)}</h4>
+                <div style={{textAlign:'center'}}>
+                    <h1>{contest.title.toUpperCase()}</h1>
+                    <div>Contest ID: {contest.contestId}</div>
+                    <div style={{fontSize:'18px', margin:'2px'}}><b>Start Time:</b> {timeConverter(contest.startTime)}</div>
+                    <div style={{fontSize:'18px'}}><b>End Time  :</b> {timeConverter(contest.endTime)}</div>
+                </div>
             </div>
         }
         {problems && createTable(problems)}
@@ -98,19 +102,19 @@ function Contest(props){
             <br/>
             {standingsNote && <h4>{standingsNote}</h4>}
 
-            <h3>Standings</h3>
+            <h2 style={{textAlign: 'center'}}>Standings</h2>
             <Table>
                 <TableHead>
-                    <TableCell>Rank</TableCell>
-                    <TableCell>Handle</TableCell>
-                    <TableCell>Accepted</TableCell>
-                    <TableCell>Wrong Submissions</TableCell>
+                    <TableCell><b>Rank</b></TableCell>
+                    <TableCell><b>Handle</b></TableCell>
+                    <TableCell><b>Accepted</b></TableCell>
+                    <TableCell><b>Wrong Submissions</b></TableCell>
                 </TableHead>
                 <TableBody>
                     {standings.map((stat, index) => {
                         return <TableRow key={index}>
                             <TableCell>{index+1}</TableCell>
-                            <TableCell>{stat.handle}</TableCell>
+                            <TableCell><Button onClick={() => goToHandle(stat.handle)}>{stat.handle}</Button></TableCell>
                             <TableCell>{stat.acProblems}</TableCell>
                             <TableCell>{stat.wrongSubs}</TableCell>
                         </TableRow>

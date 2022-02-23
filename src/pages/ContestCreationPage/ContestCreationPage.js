@@ -1,23 +1,23 @@
-import React, {useState} from 'react'
-import {useRef} from 'react';
+import React, {useRef, useState} from 'react'
 import {useNavigate} from "react-router-dom";
-import {Button, Checkbox, FormControlLabel, TextField} from "@mui/material";
+import {Button, TextField} from "@mui/material";
 
 import 'date-fns';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
 import './ContestCreationPage.css';
 import {DateTimePicker, LocalizationProvider} from "@mui/lab";
-import Contest from "../../models/Contest";
 import FileUploadComponent from "../../component/util/FileUploadComponent";
-import {createContest, getContestDetail} from '../../contactServer/contest.js'
+import {createContest} from '../../contactServer/contest.js'
 import Markdown from "markdown-to-jsx";
 import {showNotification} from '../../component/layout/showNotifications.js'
-function ContestCreationPage(){
+
+function ContestCreationPage() {
     const contestTitle = useRef();
     const navigate = useNavigate();
     const [hint, setHint] = useState(null);
-    function notification(message){
+
+    function notification(message) {
         setHint(message);
         setTimeout(() => setHint(null), 5000);
     }
@@ -55,21 +55,21 @@ function ContestCreationPage(){
         const result = await createContest(contest)
         console.log(result)
         //TODO: Send request to server to create a contest and get a ContestID actually server will return a contestObject
-        if(result.status === 'success'){
-            navigate('/contest-admin/'+result.message.contestId)
-        }else notification('Error!')
+        if (result.status === 'success') {
+            navigate('/contest-admin/' + result.message.contestId)
+        } else notification('Error!')
         // navigate('/submission', {state: {contest: new Contest(contest.title,'creator', -1, [], announcement, startTime, endTime, [])}})
     }
 
-    function onSelectAnnouncement(selectedFile){
-        if(selectedFile !== null)
-        setHasAnnouncement(true)
+    function onSelectAnnouncement(selectedFile) {
+        if (selectedFile !== null)
+            setHasAnnouncement(true)
         setAnnouncement(selectedFile)
-        console.log("Announcement: \n"+selectedFile)
+        console.log("Announcement: \n" + selectedFile)
     }
 
     return <div className="create-contest-body">
-        <h2>Contest Creation</h2>
+        <h1>CONTEST CREATION</h1>
         <div>
             <div>
                 <div className="form">
@@ -120,7 +120,7 @@ function ContestCreationPage(){
                 </div>
             </div>
             <div>
-                {hasAnnouncement && announcement && <Markdown options={{ forceBlock: true }}>{announcement}</Markdown>}
+                {hasAnnouncement && announcement && <Markdown options={{forceBlock: true}}>{announcement}</Markdown>}
             </div>
         </div>
         {hint && showNotification(hint, 'info')}

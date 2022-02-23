@@ -2,6 +2,11 @@ import {postSomething} from "./basicGetPost";
 
 const url = 'http://localhost:5000/problems/'
 
+
+export async function getProblemTutorial(contestId, problemNo) {
+    return await postSomething(url + '/getTutorial/',{contestId, problemNo});
+}
+
 export async function createProblem(problem){
     const result = await postSomething(url+'/create/', problem);
     return result

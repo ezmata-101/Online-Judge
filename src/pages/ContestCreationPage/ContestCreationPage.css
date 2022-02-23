@@ -1,18 +1,21 @@
 .create-contest-body{
     display: grid;
-    /*text-align: center;*/
+    text-align: center;
 }
 
 .form{
     /*padding: 10px;*/
 }
 .form div{
-    padding: 5px;
+    padding: 10px;
 }
 
 .title{
+
 }
 .title-text-field{
+    width: 280px;
+    /*padding: 10px;*/
 }
 
 .start-time{
@@ -25,5 +28,7 @@
 .end-time-picker{
 }
 
-.submit-button{
+.submit-button Button{
+}
+.choose-file{
 }

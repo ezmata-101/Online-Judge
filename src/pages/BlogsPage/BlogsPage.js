@@ -1,8 +1,10 @@
 import {useEffect, useState} from "react";
 import {getBlogs, getBlogsByUser} from "../../contactServer/blog";
-import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
+import {Button, Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import {showNotification} from '../../component/layout/showNotifications.js'
+import AddIcon from "@mui/icons-material/Add";
+import Fab from "@mui/material/Fab";
 function BlogsPage(){
     const navigate = useNavigate();
     const [blogs, setBlogs] = useState([]);
@@ -11,6 +13,14 @@ function BlogsPage(){
         setHint(message);
         setTimeout(() => setHint(null), 5000);
     }
+    const style = {
+        margin: 0,
+        top: 'auto',
+        right: 20,
+        bottom: 20,
+        left: 'auto',
+        position: 'fixed',
+    };
     useEffect(() => {
         getBlogs()
             .then(res => {
@@ -33,26 +43,36 @@ function BlogsPage(){
         }else showNotification('failed to fetch blogs')
     }
 
+    function goToCreateBlog() {
+        navigate('/create-blog');
+    }
+
     return <div>
-        <h4>Blogs</h4>
+        <h1 style={{textAlign:'center'}}>BLOGS</h1>
         <Table>
             <TableHead>
                 <TableRow>
-                    <TableCell>Id</TableCell>
-                    <TableCell>Title</TableCell>
-                    <TableCell>Writer</TableCell>
+                    <TableCell><b>ID</b></TableCell>
+                    <TableCell><b>TITLE</b></TableCell>
+                    <TableCell><b>WRITER</b></TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
                 {blogs.map(blog=>{
                     return <TableRow key={blog.blogId}>
-                        <TableCell onClick={() => goToBlog(blog.blogId)}>{blog.blogId}</TableCell>
-                        <TableCell onClick={() => goToBlog(blog.blogId)}>{blog.title}</TableCell>
-                        <TableCell onClick={() => goToBlogsBy(blog.handle)}>{blog.handle}</TableCell>
+                        <TableCell onClick={() => goToBlog(blog.blogId)}><Button>{blog.blogId}</Button></TableCell>
+                        <TableCell onClick={() => goToBlog(blog.blogId)}><Button>{blog.title}</Button></TableCell>
+                        <TableCell onClick={() => goToBlogsBy(blog.handle)}><Button>{blog.handle}</Button></TableCell>
                     </TableRow>
                 })}
             </TableBody>
         </Table>
+        <Fab
+            style={style}
+            color={"primary"}
+            aria-label={"add"}
+            onClick={goToCreateBlog}
+        ><AddIcon/></Fab>
         {hint && showNotification(hint, 'info')}
     </div>
 }

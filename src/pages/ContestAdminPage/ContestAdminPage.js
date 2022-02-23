@@ -114,31 +114,37 @@ function ContestAdminPage(){
         }else return <div></div>
     }
 
+    function goToHandle(handle) {
+        navigate('/profile/'+handle)
+    }
+
     function contestPage(){
         return <div>
             <div>
-                <h3>Contest Title: {contest.title}</h3>
-                <h4>Contest ID: {contest.contestId}</h4>
-                <h5>Starts at: {timeConverter(contest.startTime)}</h5>
-                <h5>Ends at: {timeConverter(contest.endTime)}</h5>
-                <Table className={"problem-list-table"}>
+                <div style={{textAlign:'center'}}>
+                    <h1>{contest.title.toUpperCase()}</h1>
+                    <div>Contest ID: {contest.contestId}</div>
+                    <div style={{fontSize:'18px', margin:'2px'}}><b>Start Time:</b> {timeConverter(contest.startTime)}</div>
+                    <div style={{fontSize:'18px'}}><b>End Time  :</b> {timeConverter(contest.endTime)}</div>
+                </div>
+                <Table className={"problem-list-table"} style={{marginTop: '10px'}}>
                     <TableHead>
                         <TableRow>
-                            <TableCell>No</TableCell>
-                            <TableCell>Problem Name</TableCell>
-                            <TableCell>difficulty</TableCell>
-                            <TableCell>Solve/Try</TableCell>
-                            <TableCell>Action</TableCell>
+                            <TableCell><b>No</b></TableCell>
+                            <TableCell><b>Problem Name</b></TableCell>
+                            <TableCell><b>Difficulty</b></TableCell>
+                            <TableCell><b>Solve/Try</b></TableCell>
+                            <TableCell><b>Action</b></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {problems.map(problem => {
                             return <TableRow key={problem.problemNo}>
                                 <TableCell>{problem.problemNo}</TableCell>
-                                <TableCell onClick={() => goToProblemDetail(problem.problemNo)}>{problem.name}</TableCell>
+                                <TableCell onClick={() => goToProblemDetail(problem.problemNo)}><Button>{problem.name}</Button></TableCell>
                                 <TableCell>{problem.difficulty}</TableCell>
                                 <TableCell>{problem.solve}/{problem.tries}</TableCell>
-                                <TableCell><Button onClick={()=> deleteProb(problem.problemNo)}>Delete</Button></TableCell>
+                                <TableCell><Button variant="contained" color={'error'} onClick={()=> deleteProb(problem.problemNo)}>Delete</Button></TableCell>
                             </TableRow>
                         })}
                     </TableBody>
@@ -150,19 +156,19 @@ function ContestAdminPage(){
                     <br/>
                     <br/>
 
-                    <h3>Standings</h3>
+                    <h2 style={{textAlign: 'center'}}>Standings</h2>
                     <Table>
                         <TableHead>
-                            <TableCell>Rank</TableCell>
-                            <TableCell>Handle</TableCell>
-                            <TableCell>Accepted</TableCell>
-                            <TableCell>Wrong Submissions</TableCell>
+                            <TableCell><b>Rank</b></TableCell>
+                            <TableCell><b>Handle</b></TableCell>
+                            <TableCell><b>Accepted</b></TableCell>
+                            <TableCell><b>Wrong Submissions</b></TableCell>
                         </TableHead>
                         <TableBody>
                             {standings.map((stat, index) => {
                                 return <TableRow key={index}>
                                     <TableCell>{index+1}</TableCell>
-                                    <TableCell>{stat.handle}</TableCell>
+                                    <TableCell><Button onClick={() => goToHandle(stat.handle)}>{stat.handle}</Button></TableCell>
                                     <TableCell>{stat.acProblems}</TableCell>
                                     <TableCell>{stat.wrongSubs}</TableCell>
                                 </TableRow>
@@ -175,7 +181,6 @@ function ContestAdminPage(){
         </div>
     }
     return <div>
-        Contest Admin Page:
         {contest && contestPage()}
     </div>
 }

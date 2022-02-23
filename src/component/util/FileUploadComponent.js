@@ -27,14 +27,14 @@ function FileUploadComponent(props){
     }
 
 
-    return <div className={"submission-div"}>
+    return <div className={"submission-div"}   style={{marginLeft:'20px'}}>
         <div>
-            <input type="file" onChange={onFileChange} />
+            <input className={"choose-file"} type="file" onChange={onFileChange} />
         </div>
 
-        {props.onFileUpload && <div>
+        {props.onFileUpload && <div style={{width:'100%', marginTop:'8px'}}>
             <Button
-                variant="outlined"
+                variant="contained"
                 onClick={onFileUpload}>
                 Submit
             </Button>

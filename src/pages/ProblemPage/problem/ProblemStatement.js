@@ -3,7 +3,7 @@ import MDEditor from "@uiw/react-md-editor";
 
 function ProblemStatement(props){
     return <div>
-        <MDEditor.Markdown source={props.statement} />
+        <MDEditor.Markdown source={props.statement}/>
     </div>
 }
 

@@ -14,6 +14,7 @@ function App() {
                 main: '#f50057',
             },
         },
+
     });
     return (
         <ThemeProvider theme={themeOptions}>

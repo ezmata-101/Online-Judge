@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
-import {Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import {getContestDetail} from "../../contactServer/contest";
+import {Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab'
@@ -66,28 +65,32 @@ function Contests(props){
         navigate('/create-contest')
     }
 
+    function goToSetter(setter) {
+        navigate('/profile/'+setter)
+    }
+
     function getTableForContest(contests, title){
         return <div>
-            <h4>{title}</h4>
+            <h3 style={{textAlign:'center'}}><u>{title}</u></h3>
             <TableContainer>
                 <Table sx={{minWidth: 650}} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>ID</TableCell>
-                            <TableCell>Title</TableCell>
-                            <TableCell>Starts at</TableCell>
-                            <TableCell>Ends at</TableCell>
-                            <TableCell>Setter</TableCell>
+                            <TableCell style={{textAlign:'center'}}><b>ID</b></TableCell>
+                            <TableCell style={{textAlign:'center'}}><b>TITLE</b></TableCell>
+                            <TableCell style={{textAlign:'center'}}><b>START TIME</b></TableCell>
+                            <TableCell style={{textAlign:'center'}}><b>END TIME</b></TableCell>
+                            <TableCell style={{textAlign:'center'}}><b>SETTER</b></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {contests.map(contest => {
                             return <TableRow key={contest.id}>
-                                <TableCell>{contest.id}</TableCell>
-                                <TableCell onClick={() => handler(contest.id)}>{contest.title}</TableCell>
-                                <TableCell>{timeConverter(contest.startTime)}</TableCell>
-                                <TableCell>{timeConverter(contest.endTime)}</TableCell>
-                                <TableCell>{contest.setter}</TableCell>
+                                <TableCell onClick={() => handler(contest.id)}>{contest.id}</TableCell>
+                                <TableCell onClick={() => handler(contest.id)}><Button>{contest.title}</Button></TableCell>
+                                <TableCell><Button>{timeConverter(contest.startTime)}</Button></TableCell>
+                                <TableCell><Button>{timeConverter(contest.endTime)}</Button></TableCell>
+                                <TableCell onClick={() => goToSetter(contest.setter)}><Button>{contest.setter}</Button></TableCell>
                             </TableRow>
                         })}
                     </TableBody>
@@ -97,7 +100,7 @@ function Contests(props){
     }
 
     return <div>
-        <h3>All contest</h3>
+        <h1 style={{textAlign:'center'}}>ALL CONTESTS</h1>
         {currentlyRunning.length > 0 && getTableForContest(currentlyRunning, "Running Contests")}
         {upComing.length > 0 && getTableForContest(upComing, "Upcoming Contests")}
         {previous.length > 0 && getTableForContest(previous, "Previous Contests")}

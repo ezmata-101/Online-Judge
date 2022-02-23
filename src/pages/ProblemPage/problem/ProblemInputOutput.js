@@ -3,12 +3,12 @@ import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
 
 function ProblemInputOutput(props){
     const p = props.problem;
-    return <div>
+    return <div style={{marginTop: '40px', width:'80%'}} >
         <Table>
             <TableHead>
                 <TableRow>
-                    <TableCell>Input</TableCell>
-                    <TableCell>Output</TableCell>
+                    <TableCell><b>INPUT</b></TableCell>
+                    <TableCell><b>OUTPUT</b></TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>

@@ -1,7 +1,7 @@
 import FilterProblemComponent from "./FilterProblemComponent";
 import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
+import {Button, Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
 import {getAllProblems} from '../../contactServer/problem.js'
 import {showNotification} from '../../component/layout/showNotifications.js'
 function ProblemListPage(props){
@@ -32,28 +32,28 @@ function ProblemListPage(props){
         navigate('/problem/'+contestId+'/'+problemNo)
     }
 
-    return <div>Problems
+    return <div>
+        <h1 style={{textAlign:'center'}}>PROBLEMS</h1>
     <div>
         <div>
-            <h3>Filter Problems</h3>
             <FilterProblemComponent onCategorySelect={onCategorySelect}/>
         </div>
-        <div>Main list
+        <div>
         <div>
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>PID</TableCell>
-                        <TableCell>Problem</TableCell>
-                        <TableCell>Difficulty</TableCell>
-                        <TableCell>Solve/Try</TableCell>
+                        <TableCell><b>PID</b></TableCell>
+                        <TableCell><b>Problem</b></TableCell>
+                        <TableCell><b>Difficulty</b></TableCell>
+                        <TableCell><b>Solve/Try</b></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {problems.map(problem => {
                         return <TableRow key={problem.contestId+'/'+problem.problemNo}>
-                            <TableCell>{"C"+problem.contestId+"P"+problem.problemNo}</TableCell>
-                             <TableCell onClick={() => {goToProblem(problem.contestId, problem.problemNo)}}>{problem.name}</TableCell>
+                            <TableCell><Button>{"C"+problem.contestId+"P"+problem.problemNo}</Button></TableCell>
+                            <TableCell onClick={() => {goToProblem(problem.contestId, problem.problemNo)}}><Button>{problem.name}</Button></TableCell>
                             <TableCell>{problem.difficulty}</TableCell>
                             <TableCell>{problem.solve+"/"+problem.tries}</TableCell>
                         </TableRow>
