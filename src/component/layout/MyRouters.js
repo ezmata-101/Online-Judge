@@ -14,7 +14,7 @@ import React from "react";
 import BlogCreatePage from "../../pages/BlogCreatePage/BlogCreatePage";
 import BlogPage from "../../pages/BlogPage/BlogPage";
 import BlogsPage from "../../pages/BlogsPage/BlogsPage";
-
+import RatingPage from '../../pages/RatingPage/RatingPage'
 export default function MyRouters() {
     return (
         <Routes>
@@ -65,6 +65,9 @@ export default function MyRouters() {
             </Route>
                 <Route path="/blogs" exact
                        element={<BlogsPage/>}>
+                </Route>
+                <Route path="/ratings" exact
+                       element={<RatingPage/>}>
                 </Route>
         </Routes>
     )

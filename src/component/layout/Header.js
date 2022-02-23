@@ -36,6 +36,7 @@ const Header = () => {
         }
         if(page === 'Contests') navigate('/contests');
         if(page === 'Problems') navigate('/problems');
+            if(page === 'Ratings') navigate('/ratings');
         if(page === 'Blogs' || page === 'Home') navigate('/blogs');
         if(page === 'Logout'){
             localStorage.setItem('accessToken', '')
