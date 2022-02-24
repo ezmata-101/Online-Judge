@@ -14,7 +14,6 @@ Level 2, Term 2 Database Project by [Md Abrar Nafee Akhand](https://github.com/A
 - Users can also solve problems from previous contests.
 - Blogs can be created as usual blogs or Contest Announcement or Problem tutorial.
 - Users can participate and share their opinions on those blogs.
-- 
 
 ### Installation
 
