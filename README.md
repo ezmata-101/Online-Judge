@@ -1,70 +1,89 @@
-# Getting Started with Create React App
+# ONLINE JUDGE
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Level 2, Term 2 Database Project by [Md Abrar Nafee Akhand](https://github.com/AN-Akhand) and [Mobaswirul Islam](https://github.com/ezmata-101)
 
-## Available Scripts
+- [Server Repository](https://github.com/AN-Akhand/oj-backend)
+- [Client Repository](https://github.com/ezmata-101/Online-Judge)
 
-In the project directory, you can run:
+#### Demonstration Video: https://youtu.be/B6EXOwsRX1U
 
-### `npm start`
+#### Project Features:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Any user can create contests, set problems.
+- Users who are not the contest creator can participate in the contest.
+- Users can also solve problems from previous contests.
+- Blogs can be created as usual blogs or Contest Announcement or Problem tutorial.
+- Users can participate and share their opinions on those blogs.
+- 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Installation
 
-### `npm test`
+###### Prerequisites: [Node Js](https://nodejs.org/en/download/) and [Oracle Database](https://www.oracle.com/database/technologies/oracle-database-software-downloads.html#19c)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+##### Setting up Database
 
-### `npm run build`
+- Create an user c##oj with password oj
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  ```shell
+  create user c##oj identified by oj;
+  grant dba to c##oj;
+  ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Run sql commands from [OJ_DDL](https://github.com/AN-Akhand/oj-backend/blob/main/sqldumps/OJ_DDL.sql) to create tables, procedures and triggers.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- (Optional) To populate database run commands from [OJ_DATA](https://github.com/AN-Akhand/oj-backend/blob/main/sqldumps/OJ_DATA.sql). 
 
-### `npm run eject`
+##### Setting up Server
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Clone the repository [oj-backend](https://github.com/AN-Akhand/oj-backend). Or download the [zip](https://github.com/AN-Akhand/oj-backend/archive/refs/heads/main.zip) and extract.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  ```shell
+  git clone https://github.com/AN-Akhand/oj-backend
+  ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Go to the repository directory and install *npm* packages.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+  ```shell
+  npm install
+  ```
 
-## Learn More
+- Start the server.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+  ```shell
+  npm run devStart
+  ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+##### Setting up front-end client
 
-### Analyzing the Bundle Size
+- Clone the repository [Online Judge](https://github.com/ezmata-101/Online-Judge). Or download the [zip](https://github.com/ezmata-101/Online-Judge/archive/refs/heads/master.zip) and extract.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+  ```shell
+  git clone https://github.com/ezmata-101/Online-Judge.git
+  ```
 
-### Making a Progressive Web App
+- Go to the repository directory and install npm packages.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+  ```shell
+  npm install
+  ```
 
-### Advanced Configuration
+- Start front-end react server
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+  ```shell
+  npm run start
+  ```
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
+#### Contributors
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [Mohammad Abrar Nafee Akhand](https://github.com/AN-Akhand)
+
+- [Mobaswirul Islam](https://github.com/ezmata-101)
+
+
+#### Supervisor
+
+- [Tahmid Hasan](https://cse.buet.ac.bd/faculty_list/detail/tahmid) ([Web Page](https://tahmid04.github.io/))

@@ -35,8 +35,8 @@ function LoginPage(){
         });
     }
 
-    return <div className="login-body">
-        <h2>Login</h2>
+    return <div className="login-body" style={{textAlign: 'center', height: '50%', margin: '0 auto'}}>
+        <h2>LOGIN</h2>
         <div className="form">
             <div className="handle">
                 <TextField

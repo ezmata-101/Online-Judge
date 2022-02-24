@@ -80,8 +80,8 @@ function SignUpPage(){
         </div>
     }
 
-    return <div className="SignUp-body">
-        <h2>Sign Up</h2>
+    return <div className="SignUp-body" style={{textAlign: 'center'}}>
+        <h2>SIGN UP</h2>
         <div className="form">
             {createTextField("handle", "Handle", handle)}
             {createTextField("name", "Full Name", fullName)}
