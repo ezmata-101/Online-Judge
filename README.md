@@ -13,7 +13,7 @@ Level 2, Term 2 Database Project by [Md Abrar Nafee Akhand](https://github.com/A
 - Users who are not the contest creator can participate in the contest.
 - Users can also solve problems from previous contests.
 - Blogs can be created as usual blogs or Contest Announcement or Problem tutorial.
-- Users can participate and share their opinions on those blogs.
+- Users can participate and share their opinions on those blogs. 
 
 ### Installation
 
@@ -31,7 +31,11 @@ Level 2, Term 2 Database Project by [Md Abrar Nafee Akhand](https://github.com/A
 - Run sql commands from [OJ_DDL](https://github.com/AN-Akhand/oj-backend/blob/main/sqldumps/OJ_DDL.sql) to create tables, procedures and triggers.
 
 - (Optional) To populate database run commands from [OJ_DATA](https://github.com/AN-Akhand/oj-backend/blob/main/sqldumps/OJ_DATA.sql). 
-
+- Or you can download the dump files and connect to sqlplus as c##oj and run
+```shell
+  @"{DIRECTORY_PATH_WHERE_THE_DUMPS_ARE_SAVED}\OJ_DDL.sql";
+  @"{DIRECTORY_PATH_WHERE_THE_DUMPS_ARE_SAVED}\OJ_DATA.sql";
+  ```
 ##### Setting up Server
 
 - Clone the repository [oj-backend](https://github.com/AN-Akhand/oj-backend). Or download the [zip](https://github.com/AN-Akhand/oj-backend/archive/refs/heads/main.zip) and extract.
